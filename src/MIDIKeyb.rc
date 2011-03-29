@@ -1,0 +1,309 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_Dialog0 DIALOGEX 0, 0, 566, 452
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU
+CAPTION "(c) 2010 V.Madgazin"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    COMBOBOX        IDC_MidiOutDevice,397,41,147,98,CBS_DROPDOWNLIST | WS_VSCROLL
+    LTEXT           "GM Instrument",IDC_STATIC,333,66,58,8
+    COMBOBOX        IDC_GM_Instrument,397,64,147,145,CBS_DROPDOWNLIST | WS_VSCROLL
+    LTEXT           "MIDI  Out Device",IDC_STATIC,333,43,58,8
+    LTEXT           "Mid:",IDC_STATIC_MID,182,409,297,8
+    LTEXT           "Right:",IDC_STATIC_RIGHT,182,428,297,8
+    LTEXT           "Left:",IDC_STATIC_LEFT,182,392,297,8
+    CONTROL         "Generate Accord",IDC_CHECK_Generate_Accord,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,327,285,60,15
+    PUSHBUTTON      "HELP",IDC_BUTTON_HELP,483,387,60,14
+    PUSHBUTTON      "CLOSE",IDC_BUTTON_CLOSE,483,425,60,14
+    PUSHBUTTON      "WEB SITE",IDC_BUTTON_WWW,483,406,60,14
+    LTEXT           "Dichotic Diss  ",IDC_STATIC_Total_Diss,22,409,70,8
+    CONTROL         "",IDC_Pan_Voice_1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,40,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,40,56,15
+    CONTROL         "Dichotic Output",IDC_CHECK_Dichotic_Output,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,22,391,64,10
+    CONTROL         "Swap Output",IDC_CHECK_Swap_Output,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,96,391,55,10
+    CONTROL         "",IDC_SLIDER_Volume,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,392,86,158,16
+    LTEXT           "Volume",IDC_STATIC_Volume,333,90,58,8
+    CONTROL         "",IDC_SLIDER_Transposition,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,392,104,158,16
+    LTEXT           "Transposition",IDC_STATIC_Transposition,333,108,58,8
+    CONTROL         "",IDC_Note_Voice_1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,40,148,15
+    CONTROL         "",IDC_Pan_Voice_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,58,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,58,56,15
+    CONTROL         "",IDC_Note_Voice_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,58,148,15
+    CONTROL         "",IDC_Pan_Voice_3,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,77,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,77,56,15
+    CONTROL         "",IDC_Note_Voice_3,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,77,148,15
+    CONTROL         "",IDC_Pan_Voice_4,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,105,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,105,56,15
+    CONTROL         "",IDC_Note_Voice_4,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,105,148,15
+    CONTROL         "",IDC_Pan_Voice_5,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,123,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,123,56,15
+    CONTROL         "",IDC_Note_Voice_5,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,123,148,15
+    CONTROL         "",IDC_Pan_Voice_6,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,141,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,141,56,15
+    CONTROL         "",IDC_Note_Voice_6,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,141,148,15
+    CONTROL         "",IDC_Pan_Voice_7,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,169,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,169,56,15
+    CONTROL         "",IDC_Note_Voice_7,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,169,148,15
+    CONTROL         "",IDC_Pan_Voice_8,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,187,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,187,56,15
+    CONTROL         "",IDC_Note_Voice_8,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,187,148,15
+    CONTROL         "",IDC_Pan_Voice_9,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,205,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,205,56,15
+    CONTROL         "",IDC_Note_Voice_9,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,205,148,15
+    CONTROL         "",IDC_Pan_Voice_10,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,232,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_10,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,232,56,15
+    CONTROL         "",IDC_Note_Voice_10,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,232,148,15
+    CONTROL         "",IDC_Pan_Voice_15,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,334,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_11,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,21,250,56,15
+    CONTROL         "",IDC_Note_Voice_11,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,250,148,15
+    CONTROL         "",IDC_Pan_Voice_11,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,250,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_12,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,21,268,56,15
+    CONTROL         "",IDC_Note_Voice_12,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,268,148,15
+    CONTROL         "",IDC_Pan_Voice_12,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,267,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_13,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,21,297,56,15
+    CONTROL         "",IDC_Note_Voice_13,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,297,148,15
+    CONTROL         "",IDC_Pan_Voice_13,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,298,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_14,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,21,316,56,15
+    CONTROL         "",IDC_Note_Voice_14,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,316,148,15
+    CONTROL         "",IDC_Pan_Voice_14,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,316,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_15,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,21,334,56,15
+    CONTROL         "",IDC_Note_Voice_15,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,334,148,15
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,139,94,120,8
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,139,158,120,8
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,139,222,120,8
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,139,286,120,8
+    PUSHBUTTON      "+1",IDC_V1V3_INC,293,40,16,15
+    PUSHBUTTON      "0",IDC_V1V3_0,293,58,16,15
+    PUSHBUTTON      "-1",IDC_V1V3_DEC,293,77,16,15
+    PUSHBUTTON      "+1",IDC_V4V6_INC,293,104,16,15
+    PUSHBUTTON      "0",IDC_V4V6_0,293,123,16,15
+    PUSHBUTTON      "-1",IDC_V4V6_DEC,293,141,16,15
+    PUSHBUTTON      "+1",IDC_V7V9_INC,293,168,16,15
+    PUSHBUTTON      "0",IDC_V7V9_0,293,186,16,15
+    PUSHBUTTON      "-1",IDC_V7V9_DEC,293,205,16,15
+    PUSHBUTTON      "+1",IDC_V10V12_INC,293,232,16,15
+    PUSHBUTTON      "0",IDC_V10V12_0,293,250,16,15
+    PUSHBUTTON      "-1",IDC_V10V12_DEC,293,269,16,15
+    PUSHBUTTON      "+1",IDC_V13V15_INC,293,298,16,15
+    PUSHBUTTON      "0",IDC_V13V15_0,293,317,16,15
+    PUSHBUTTON      "-1",IDC_V13V15_DEC,293,335,16,15
+    PUSHBUTTON      "All 0",IDC_V1V15_0,284,362,25,15
+    PUSHBUTTON      "Enable voices",IDC_Enable_All_Voices,21,362,56,15
+    PUSHBUTTON      "Pan",IDC_Pan_All_Voices,90,362,25,15
+    PUSHBUTTON      "Renumber notes of enabled voices",IDC_Renumber_All_Notes,128,362,137,15
+    PUSHBUTTON      "Save Accord",IDC_Save_Accord,327,193,60,15
+    PUSHBUTTON      "Load Accord(s)",IDC_Load_Accords,460,168,85,15
+    CONTROL         "",IDC_SLIDER_Temp,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,392,123,158,15
+    CONTROL         "",IDC_SLIDER_Duration,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,392,142,158,15
+    CONTROL         "",IDC_SLIDER_Accord_number,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,392,240,158,15
+    LTEXT           "Temp",IDC_STATIC_Temp,333,127,58,8
+    LTEXT           "Duration",IDC_STATIC_Duration,333,146,58,8
+    LTEXT           "Accord",IDC_STATIC_Accord_number,333,244,58,8
+    PUSHBUTTON      "Play/Stop",IDC_Play_Stop,460,285,39,15
+    PUSHBUTTON      "Rewind",IDC_Rewind,506,285,39,15
+    CONTROL         "Loop Chain",IDC_CHECK_Loop_Chain,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,398,288,49,10
+    EDITTEXT        IDC_EDIT_Accord_Comment,22,12,445,14,ES_AUTOHSCROLL
+    CONTROL         "Smart Voices",IDC_CHECK_Smart_Voices,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,22,427,64,10
+    PUSHBUTTON      "Save Ac-s Chain",IDC_Save_Accords_Chain,398,193,147,15
+    PUSHBUTTON      "Append Accord",IDC_Append_Accord,327,168,60,15
+    CONTROL         "Edit Comment",IDC_CHECK_Edit_Comment,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,483,12,60,14
+    CONTROL         "",IDC_SLIDER_Chain_Speed,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,392,259,158,15
+    LTEXT           "Chain Speed",IDC_STATIC_Chain_Speed,333,263,58,8
+    CONTROL         "Don't Change GM Instrument",IDC_CHECK_Dont_Change_GM_Instrument,
+                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,328,222,105,10
+    CONTROL         "",IDC_CHECK_Enable_Left_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,162,391,9,10
+    CONTROL         "",IDC_CHECK_Enable_Mid_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,162,409,9,10
+    CONTROL         "",IDC_CHECK_Enable_Right_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,162,427,9,10
+    LTEXT           "Uniq Notes",IDC_STATIC_Uniq_Notes,97,409,56,8
+    CONTROL         "Notes%12",IDC_CHECK_Notes_12,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,96,427,55,10
+    PUSHBUTTON      "Del Identic (3+3)",IDC_Del_Identic3and3,327,317,60,15
+    PUSHBUTTON      "Sort Similar Accords",IDC_Sort_Similar_Accords,460,317,85,15
+    PUSHBUTTON      "Add Inverse Pan",IDC_Add_Inverse_Pan_Accords,393,317,60,15
+    CONTROL         "Sort Mode",IDC_CHECK_Sort_Mode,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,485,339,60,15
+    PUSHBUTTON      "Del Identic (2+2)",IDC_Del_Identic2and2,327,339,60,15
+    CONTROL         "Big Duration",IDC_CHECK_Big_Duration,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,398,171,54,10
+    CONTROL         "Dichotic File",IDC_CHECK_File_2H_Converter,"Button",BS_AUTO3STATE | BS_PUSHLIKE | WS_TABSTOP,460,219,85,15
+    PUSHBUTTON      "Accords Multi 2",IDC_Accords_Multi_2,327,363,60,15
+    PUSHBUTTON      "Accords Multi 3",IDC_Accords_Multi_3,393,363,60,15
+    CONTROL         "AM +Octave Shift",IDC_CHECK_AM_Octave_Shift,"Button",BS_AUTO3STATE | BS_PUSHLIKE | WS_TABSTOP,458,363,85,15
+    CONTROL         "Edit Sequence",IDC_CHECK_Edit_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,398,342,65,10
+END
+
+IDD_Dialog1 DIALOGEX 0, 0, 566, 228
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU
+CAPTION "(c) 2010 V.Madgazin"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    LTEXT           "Mid:",IDC_STATIC_MID,182,186,148,8
+    LTEXT           "Right:",IDC_STATIC_RIGHT,182,204,148,8
+    LTEXT           "Left:",IDC_STATIC_LEFT,182,168,148,8
+    CONTROL         "Generate Accord",IDC_CHECK_Generate_Accord,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,327,142,60,15
+    LTEXT           "Dichotic Diss  ",IDC_STATIC_Total_Diss,22,185,70,8
+    CONTROL         "",IDC_Pan_Voice_1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,41,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,41,56,15
+    CONTROL         "",IDC_Note_Voice_1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,41,148,15
+    CONTROL         "",IDC_Pan_Voice_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,59,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,59,56,15
+    CONTROL         "",IDC_Note_Voice_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,59,148,15
+    CONTROL         "",IDC_Pan_Voice_3,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,78,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,78,56,15
+    CONTROL         "",IDC_Note_Voice_3,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,78,148,15
+    CONTROL         "",IDC_Pan_Voice_4,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,106,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,106,56,15
+    CONTROL         "",IDC_Note_Voice_4,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,106,148,15
+    CONTROL         "",IDC_Pan_Voice_5,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,124,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,124,56,15
+    CONTROL         "",IDC_Note_Voice_5,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,124,148,15
+    CONTROL         "",IDC_Pan_Voice_6,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,87,142,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Enable_Voice_6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,22,142,56,15
+    CONTROL         "",IDC_Note_Voice_6,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,123,142,148,15
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,139,95,120,8
+    PUSHBUTTON      "+1",IDC_V1V3_INC,293,41,16,15
+    PUSHBUTTON      "0",IDC_V1V3_0,293,59,16,15
+    PUSHBUTTON      "-1",IDC_V1V3_DEC,293,78,16,15
+    PUSHBUTTON      "+1",IDC_V4V6_INC,293,105,16,15
+    PUSHBUTTON      "0",IDC_V4V6_0,293,124,16,15
+    PUSHBUTTON      "-1",IDC_V4V6_DEC,293,142,16,15
+    PUSHBUTTON      "Save Accord",IDC_Save_Accord,327,67,60,15
+    CONTROL         "",IDC_SLIDER_Accord_number,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,392,97,158,15
+    LTEXT           "Accord",IDC_STATIC_Accord_number,333,101,58,8
+    PUSHBUTTON      "Play/Stop",IDC_Play_Stop,460,142,39,15
+    PUSHBUTTON      "Rewind",IDC_Rewind,506,142,39,15
+    CONTROL         "Loop Chain",IDC_CHECK_Loop_Chain,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,398,145,49,10
+    PUSHBUTTON      "Save Ac-s Chain",IDC_Save_Accords_Chain,398,67,147,15
+    PUSHBUTTON      "Append Accord",IDC_Append_Accord,327,42,60,15
+    CONTROL         "",IDC_SLIDER_Chain_Speed,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,392,116,158,15
+    LTEXT           "Chain Speed",IDC_STATIC_Chain_Speed,333,120,58,8
+    CONTROL         "",IDC_CHECK_Enable_Left_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,162,167,9,10
+    CONTROL         "",IDC_CHECK_Enable_Mid_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,162,185,9,10
+    CONTROL         "",IDC_CHECK_Enable_Right_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,162,203,9,10
+    LTEXT           "Uniq Notes",IDC_STATIC_Uniq_Notes,97,185,56,8
+    PUSHBUTTON      "Load Accord(s)",IDC_Load_Accords,485,42,60,15
+    CONTROL         "Dichotic Output",IDC_CHECK_Dichotic_Output,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,22,167,64,10
+    CONTROL         "Swap Output",IDC_CHECK_Swap_Output,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,96,167,55,10
+    CONTROL         "Smart Voices",IDC_CHECK_Smart_Voices,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,22,202,64,10
+    CONTROL         "Notes%12",IDC_CHECK_Notes_12,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,96,202,55,10
+    EDITTEXT        IDC_EDIT_Accord_Comment,22,12,445,14,ES_AUTOHSCROLL
+    CONTROL         "Edit Comment",IDC_CHECK_Edit_Comment,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,485,12,60,14
+    LTEXT           "GM Instrument",IDC_STATIC,333,190,53,8
+    COMBOBOX        IDC_GM_Instrument,398,186,147,145,CBS_DROPDOWNLIST | WS_VSCROLL
+    CONTROL         "Don't Change GM Instrument",IDC_CHECK_Dont_Change_GM_Instrument,
+                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,398,167,105,10
+    CONTROL         "Edit Sequence",IDC_CHECK_Edit_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,401,44,65,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_Dialog0, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 559
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 445
+    END
+
+    IDD_Dialog1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 559
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 221
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON                    "musicstore1t.ico"
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
