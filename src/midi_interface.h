@@ -56,14 +56,13 @@ public:
   // сообщение панорамирования: Bn 10 pan (0=left, 64=mid, 127=right)
   void MidiPanChan(int chan, int pan) { MidiOutChan(chan, 0xB0, 10, pan); }
 
-  void ChanPan(int chan, int pan)
+  void ChanPan(int chan, double pan)
   // панорамирование в миди канале chan
   // с условным параметром pan         -1,      0,        +1
   // соответствующим миди панораме 0=left, 64=mid, 127=right
   {
-    int midipan = 64;
-    if (pan < 0) midipan = 0;
-    if (pan > 0) midipan = 127;
+    int midipan = 64 + float2int(pan*64);
+    mintestmax(0, midipan, 127);
     MidiOutChan(chan, 0xB0, 10, midipan);
   }
 
@@ -77,15 +76,13 @@ public:
     }
   }
 
-  // открытие устройства midi девайса с номером number и установка номера инструмента
-  bool OpenDeviceOut(int device_number, int instrument_number)
+  // открытие устройства midi девайса с номером number
+  bool OpenDeviceOut(int device_number)
   {
     hout = NULL;
     // пытаемся открыть нужное устройство без запроса уведомления
     MMRESULT res = midiOutOpen(&hout, device_number, 0, 0, 0);
-    if (res != MMSYSERR_NOERROR) return false;
-    AllChanPatchChange(instrument_number);
-    return true;
+    return (res == MMSYSERR_NOERROR);
   }
 
   void SendPatchChange(int chan, int instrument_number) // сообщение о смене инструмента в канале
@@ -103,7 +100,11 @@ public:
     midiOutCachePatches(hout, 0, patches, MIDI_CACHE_ALL); // грузим инструменты
 
     for (int chan = MIDI_CHANNEL_MIN; chan < MIDI_CHANNEL_MAX; ++chan)
+    {
+      // не трогаем неиспользуемые midi каналы
+      if ( in_range(NOT_USED_MIDI_CHANNEL_MIN, chan, NOT_USED_MIDI_CHANNEL_MAX) ) continue;
       SendPatchChange(chan, instrument_number);
+    }
   }
 };
 

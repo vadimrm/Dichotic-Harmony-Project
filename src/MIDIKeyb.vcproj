@@ -82,6 +82,7 @@
 				ProgramDatabaseFile=".\Release/MIDIKeyb.pdb"
 				SubSystem="2"
 				TargetMachine="1"
+				Profile="false"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -152,7 +153,7 @@
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="4"
-				WarnAsError="true"
+				WarnAsError="false"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
 			/>
@@ -214,11 +215,19 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath=".\files.cpp"
+				RelativePath=".\2HAccGen.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\main.cpp"
+				RelativePath=".\amain.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\dichotic.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\files.cpp"
 				>
 			</File>
 			<File
@@ -226,24 +235,8 @@
 				>
 			</File>
 			<File
-				RelativePath="midikeyb.rc"
+				RelativePath=".\music.cpp"
 				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\music_files.cpp"
@@ -283,6 +276,10 @@
 			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
 			<File
+				RelativePath=".\amain.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ar.h"
 				>
 			</File>
@@ -295,11 +292,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\main.h"
+				RelativePath=".\midi_interface.h"
 				>
 			</File>
 			<File
-				RelativePath=".\midi_interface.h"
+				RelativePath=".\music.h"
 				>
 			</File>
 			<File

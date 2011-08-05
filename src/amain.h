@@ -1,4 +1,19 @@
-﻿/*
+﻿
+#pragma once
+
+extern const int DNUMS;
+extern const int VER_NUM;
+extern const int DIALOG_VOICES[];
+extern const wchar_t *copyright, *website, *files_default_dir;
+
+extern int act_dialog_index;
+
+extern class MusicDialogBoxCtrl dbox[];
+extern class MidiInterface MIDII;
+
+MusicDialogBoxCtrl &actbox(); // ссылка на текущий активный диалог бокс
+
+/*
 
   =Возможно надо:
   -чекбокс разрешения запуска нескольких экземпляров приложения, по умолчанию сброшенный;
@@ -83,15 +98,3 @@
   -регулятор сдвига высоты всех голосов в одном канале звука, напр. в левом: от 0 до 100 центов!
 
 */
-
-#pragma once
-
-extern const int VER_NUM;
-extern int act_dialog_index;
-extern const wchar_t *copyright, *website;
-
-extern class MusicDialogBoxCtrl dbox[];
-extern class MidiInterface MIDII;
-
-inline MusicDialogBoxCtrl &act_dbox(); // ссылка на текущий активный диалог бокс
-

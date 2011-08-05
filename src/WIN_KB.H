@@ -28,9 +28,9 @@
 #define KeyCodPause        VK_PAUSE
 
 #define KeyCodTilda        192 // ~
-#define KeyCod1            '1' //   и !
-#define KeyCod2            '2' //     @
-#define KeyCod3            '3' //     #
+#define KeyCod1            '1' // 1 и !
+#define KeyCod2            '2' // 2 и "амфора" (или "собака")
+#define KeyCod3            '3' // ... #
 #define KeyCod4            '4' //     $
 #define KeyCod5            '5' //     %
 #define KeyCod6            '6' //     ^

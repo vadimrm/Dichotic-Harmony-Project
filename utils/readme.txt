@@ -1,29 +1,41 @@
 ﻿Dichotic Harmony Files Converter
 Copyright (c) 2010 Vadim Madgazin
-Версия 1.09 от 24 февраля 2011 г.
+Версия 1.21 от 17 июня 2011 г.
 
+Консольное win32 приложение для взаимной конвертации .daccords и .mid файлов,
+а также для их дополнительной обработки - удаления начальной паузы, обрезания
+и т.п. - см. ниже параметры строки запуска.
 
-Midi input (first default par):         "2h_converter  INFILE.mid"
+Usage for midi input:  "2h_converter.exe  INFILE.mid"
 
-or Daccords input (second default par): "2h_converter  INFILE[.daccords]"
+Usage for daccords input:  "2h_converter.exe  INFILE[.daccords]"
 
-optional parameters, their default(s) ([first];[second]) and range min/max:
+Usage for music generator output:  "2h_converter.exe  GEN"
 
--col    (0;  )  collapse_midi_tracks 0/1
--colex  (0;  )  collapse_and_expand_midi_tracks 0/1
--pause  (1; 1)  use_start_pause of music 0/1
--clip   (0.; )  clip_music_time seconds  0.=infinite/max double
--text   (0;  )  save midi_as_text  0/1
--pan    (2; 2)  panorame_precision digits  0/3
--perc   (0; 1)  use_percussion instruments  0/1
--trans  (1;  )  optimize_transposition  0/1
--tlag   (1.; )  accord_time_lag  0./100.
--tick   ( ;1.)  tick_time_msec midi tick  0.01/1000.
--rep    ( ; 1)  repeat_upto_number loop music  1/1e6
--anum   (1; 1)  add_accord_number text  0/1
--acomm  (1; 1)  add_accord_comment text  0/2
--head   ( ; 0)  add_daccords_header text as seq.specific  0/1
+optional parameters, their defaults for ([midi];[daccords]) and range min/max:
 
+-col    (0;  )  collapse_midi_tracks 0/1 свернуть все midi треки в один трек
+-colex  (0;  )  collapse_and_expand_midi_tracks 0/1 свернуть и развернуть
+-pause  (1; 1)  use_start_pause of music 0/1 использовать начальную паузу
+-clip   (0.; )  clip_music_time seconds 0.=infinite/max double обрезать музыку
+-text   (0;  )  save midi_as_text 0/1 записать midi файл как текстовый
+-pan    (2; 2)  panorame_precision digits 0/3 точность панорамы звука, дес. знаков
+-perc   (0; 1)  use_percussion instruments 0/1 использовать канал ударных инструм.
+-trans  (1;  )  optimize_transposition 0/1 оптимизировать общую транспозицию нот
+-tlag   (1.; )  accord_time_lag 0./100. интервал одновременности нот, мсек
+-tick   ( ;1.)  tick_time_msec midi tick 0.01/1000. точность midi времени, мсек
+-rep    ( ; 1)  repeat_upto_number loop music 1/1e6 число повторов музыки
+-anum   (1; 1)  add_accord_number text 0/1 добавлять номер аккорда в файл
+-acomm  (1; 1)  add_accord_comment text 0/2 формат комментария аккорда
+-head   ( ; 0)  add_daccords_header text as seq.specific 0/1 добавлять хедер
+
+-ncol  (0)  notes color for music GEN:  0/1
+-m     (7)  M for music GEN:  M <= 10
+-n     (7)  N for music GEN:  N <= M
+-k     (2)  K for music GEN:  2 <= K < N
+-seed  (0)  random seed for music GEN:  -2^31...+2^31
+
+Example:  "2h_converter.exe INFILE.mid -clip 60 -pause 0"
 
 =================================================================================
 

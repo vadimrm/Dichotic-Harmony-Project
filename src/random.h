@@ -4,8 +4,6 @@
 
 #pragma once
 
-bool TurnSecureCode(void *buffer, int numbytes, int key, int width, bool key_from_numbytes = false);
-
 // генератор псевдо-случайных чисел с разрядностью 1...32 бит
 class Random
 {

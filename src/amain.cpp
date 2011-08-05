@@ -1,39 +1,28 @@
 ﻿#include "stdafx.h"
 const wchar_t* copyright = L"Dichotic Harmony Accords Generator (c) 2010 Vadim Madgazin";
-const int VER_NUM = 301; // версия*100 от 25 марта 2011 г.
+const int VER_NUM = 304; // версия*100 от 5 августа 2011 г.
 /*
   =Сделано:
-  -небольшой рефакторинг кода...
-  -по умолчанию создаётся один диалог бокс
-  -новая документация, инсталлер, midi файлы...
-  -в архиве версии включены все сопутствующие файлы для публики
-  -два варианта версии: в кодировке Win1251 и UTF-8 (для GitHub)
+  -включаем диалогбокс 2 только при включённой автоконвертации
+  -убрал чекбокс Converter_Play, передвинул некот. другие контролы
+  -добавил low-level манипуляторы:
+   -Stereo_Base стереобаза: амплитуда панорамы звука от 0 до 100%
+   -Notes_Shift сдвиг высоты всех нот из регуляторов аккорда -12...+12
+    этот сдвиг считается как сдвиг в самих регуляторах высоты нот, а не доп. сдвиг при пост-обработке
+    однако при воспроизведении секвенции он не обнуляется, поэтому может быть использован также как и
+    основной регулятор Transposition...
+  -исправил мелкие недочёты...
 
   =Надо:
+  -сделать инсталлер, записать всё в Git!
 
-  -версию в UTF-8 выложить на GitHub!
+  =Затем:
+  -см. тетрадь стр. 115: составить новые библиотеки аккордов!
+  -гармонизировать гамму до-мажор
+  -найти одногол. музыку, преобразовать в 2H...
 
-  =Следующая версия:
-
-  -в ините доп. диалог бокса сразу грузим 7 банков 2H аккордов
-  -по кнопке грузится файл 1H секвенции (моно!), которую надо преобразовать в 2H
-  -каждый исходный 1H аккорд преобразуем в 2H аккорд, который выбирается (на слух!) из
-   множества "подходящих" аккордов, формируемого из произвольного набора 2H банков:
-   -у 1H и 2H аккордов одинаковое число голосов (N нот) и с точностью до октавного сдвига
-    одинаковый состав нот
-   -то же, но у 2H акода 1 дополнительная нота, отсутствующая у 1H аккорда
-   -то же, но --//--     2 --//--
-   -и.т.д до 9 доп. нот
-  -частично готовая 2H секвенция запоминается из отдельных аккордов (с их вариантами?)
-   и проигрывается по мере создания...
-
-  =Следующая версия:
-
-  -код для преобразования обычной музыки в 2H, см. тетрадь Projects-III, стр. 105 и далее!
-  -найти хорошие полифонич. произведения (напр. короткие целиком 4-х голосные хоралы Баха)
-   и сделать 2H варианты!
-
-  -перевести самые лучшие демо файлы в .wav файлы?
+  =Затем:
+  -перевести самые лучшие демо файлы в .wav файлы через timidity player!
   -добавить в доку ссылки на утилиты, переводящие midi в wav файлы...
   -на сайте положить несколько лучших дихотических midi/wav файлов для быстрого прослушивания!
 
@@ -51,17 +40,22 @@ const int VER_NUM = 301; // версия*100 от 25 марта 2011 г.
    в организации (Консерватории, инновационные конторы и т.п.)
   -распостранить информацию среди учащихся муз. школ и студентов!!
 
-  =Потом:
-
   -заменить демки дисс/музыки на более аутентичную...
   -сделать англ. инсталлер и короткую доку?
   -сделать англ. страницу программы http://www.vmgames.com/music/
   -ссылка на англ музык. страницу с главной страницы сайта!
   -сделать PAD файл, засабмитить везде и по миди-сайтам...
-  -см. также файл main.h
+  -см. также файл amain.h
+
+  =Потом:
+  =Следующая версия:
+  -найти midi и 2H преобразовать сложную органную музыку (Бах), прослушать...
+  -можно поискать современных композеров (типа Кейджа) - суперсложную музыку...
 
   =Важно:
-
+  -если выбран чекбокс Edit_Sequence то для 2H преобразования берётся аккорд из регуляторов!
+  -если не выбран чекбокс With_Unisons из группы "манипуляторов" текущего аккорда бокса 0, то перед
+   2H конвертацией удаляем все лишние голоса-унисоны (с любой панорамой) и голоса-паузы аккорда!
   -в самом начале хоткеи клавиатуры попадают в бокс 0 а не в бокс 1, видимо проскакивают какие-то "левые"
    мессаги, переключающие фокус ввода на бокс 0... SetFocus() на бокс 1 тоже не даёт эффекта...
   -ноты с одинаковыми номерами в одинаковых миди каналах будут "общими" для всех диалог боксов!
@@ -79,14 +73,16 @@ const int VER_NUM = 301; // версия*100 от 25 марта 2011 г.
    daccords-плеере: секвенция из 100 нот по 10 мсек замедляется в нём раза в 3!
 */
 
+const wchar_t *files_default_dir = L"accords"; // директория daccords файлов относительно программы
+// const wchar_t *files_default_dir = L".";
 
-int dialog_numbers = 1; // умолчание для количества диалогбоксов: 1 обычный режим, 2 расширенный
+const int DNUMS = 3; // макс. количество диалог боксов
+
+const int DIALOG_VOICES[DNUMS] = {12, 6, 6}; // число голосов с контролами в боксе [index], не более MAX_MIDI_CHANNELS = 15
 
 const wchar_t *website = L"http://www.vmgames.com/music/"; // домашняя страница программы
 
-wchar_t dialog_prefix = L'?'; // число диалогбоксов кодируется этим префиксом: "?1" или "?2"
-
-MusicDialogBoxCtrl dbox[2]; // сами диалогбоксы...
+MusicDialogBoxCtrl dbox[DNUMS]; // сами диалогбоксы...
 
 int act_dialog_index = 0; // индекс текущего активного диалог бокса, 0, 1 ...
 
@@ -94,12 +90,12 @@ MidiInterface MIDII; // аппаратный интерфейс midi
 
 
 // ссылка на текущий активный диалог бокс
-inline MusicDialogBoxCtrl &act_dbox() { return dbox[act_dialog_index]; }
+MusicDialogBoxCtrl &actbox() { return dbox[act_dialog_index]; }
 
 int WINAPI MyMsgBoxFun(HWND, LPCWSTR text, LPCWSTR, UINT)
 {
   // модальный мессаг-бокс над активным диалог боксом
-  return MessageBoxW( act_dbox().hwnd(), text, L"Mbox", MB_OK );
+  return MessageBoxW( actbox().hwnd(), text, L"Mbox", MB_OK );
 }
 
 int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Cmd, int CmdShow)
@@ -112,55 +108,35 @@ int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Cmd, int Cm
   // отрабатываем запуск типа drag-n-drop файл на иконку приложения
   int argc;
   wchar_t *WCmd = GetCommandLineW();
-#ifdef DDD
-  // Mbox(WCmd);
-#endif
   wchar_t **argv = CommandLineToArgvW(WCmd, &argc);
-  wchar_t *file = L""; // имя файла для загрузки (и проигрывания в диалог боксе 0)
-  if (argc == 2) // запуск с параметром
-  {
-    if ( *argv[1] == dialog_prefix ) // это префикс числа диалогбоксов
-      dialog_numbers = _wtol( argv[1] + 1 ); // извлекаем число
-    else
-      file = argv[1]; // это имя файла
-  }
-  else
-  if (argc == 3) // запуск с 2-мя параметрами: число и имя
-  {
-    dialog_numbers = _wtol( argv[1] + 1 );
-    file = argv[2];
-  }
-
+  wchar_t *file = (wchar_t*)L""; // имя файла для загрузки (и проигрывания в диалог боксе 0)
+  if (argc == 2) file = argv[1]; // запуск с параметром "имя файла"
 #ifdef DDD
-  Mbox(dialog_numbers, file);
+  Mbox(WCmd, file);
 #endif
 
-  // запускаем диалогбокс(ы), используем указатель на функцию-член класса!
+  // запускаем диалогбоксы, используем указатель на функцию-член класса!
   dbox[0].Create(Instance, IDD_Dialog0, HWND_DESKTOP, &MusicDialogBoxCtrl::DialogProc0);
+  dbox[1].Create(Instance, IDD_Dialog1, HWND_DESKTOP, &MusicDialogBoxCtrl::DialogProc1);
+  dbox[2].Create(Instance, IDD_Dialog2, HWND_DESKTOP, &MusicDialogBoxCtrl::DialogProc2);
+  // сначала показываем только главный диалогбокс 0!
   dbox[0].Show();
-  if ( 2 == dialog_numbers )
-  {
-    dbox[1].Create(Instance, IDD_Dialog1, HWND_DESKTOP, &MusicDialogBoxCtrl::DialogProc1);
-    dbox[1].Show();
-  }
 
-  // если есть имя - грузим (daccords) файл, а при одном боксе 0 ещё и запускаем его на проигрывание
-  if ( wcslen(file) > 0 )
-  {
-    if ( dialog_numbers == 1 && dbox[0].LoadAccords(0, file) ) dbox[0].PlayStopAccords();
-    if ( dialog_numbers == 2 )  dbox[1].LoadAccords(0, file);
-  }
+  // если есть - грузим daccords файл и запускаем его на проигрывание
+  if ( wcslen(file) > 0 && dbox[0].LoadAccords(0, file) ) dbox[0].Play_StopAccords();
 
-  // для обращение к объектам активного диалог бокса используется act_dbox() !! вроде всё работает... 
+  // для обращение к объектам активного диалог бокса используется actbox() !! вроде всё работает...
   MSG msg;
   while (GetMessage(&msg, NULL, 0, 0))
   {
-    if ( act_dbox().get_check(Edit_Comment).checked_state() ) // если клавиатура нужна в диалог боксах
+    if ( actbox().get_check(Edit_Comment).checked_state() ) // если клавиатура нужна в диалог боксах
     {
       if ( dbox[0].IsDialogMsg(&msg) ) ; // клавиатура попадает в диалогбокс 0
       else
       if ( dbox[1].IsDialogMsg(&msg) ) ; // клавиатура попадает в диалогбокс 1
-      else 
+      else
+      if ( dbox[2].IsDialogMsg(&msg) ) ; // клавиатура попадает в диалогбокс 2
+      else
         DispatchMessage(&msg); // остальные сообщения передаем стандартному обработчику
     }
     else // клавиатура не нужна в боксах, это независимые от номера бокса хоткеи, они работают здесь!
@@ -174,7 +150,7 @@ int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Cmd, int Cm
           // генерация звука аккорда
           case KeyCodIns: case KeyCodAdd0: case KeyCodCtrl:
             if ( !(msg.lParam & 0x40000000) )
-              act_dbox().MaybeGenerateAccord(1); // возможное вкл. аккорда
+              actbox().MaybeGenerateAccord(1); // возможное вкл. аккорда
             // else это автоповтор!
             break;
 
@@ -182,8 +158,8 @@ int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Cmd, int Cm
           case KeyCod5: case KeyCodAdd5:
             if ( !(msg.lParam & 0x40000000) )
             {
-              act_dbox().checks[Swap_Output].inverse_state();
-              act_dbox().RegenAccord();
+              actbox().checks[Swap_Output].inverse_state();
+              actbox().RegenAccord();
             }
             break;
 
@@ -191,16 +167,16 @@ int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Cmd, int Cm
           // эти клавиши работают с автоповторами, но аккорд перенажимается только при их отпускании!
           case KeyCodAdd4: case KeyCod4: // почему-то Add4/6 работают только при нажатой NumLock!
           case KeyCodAdd6: case KeyCod6:
-            if ( act_dbox().accords_in_chain < 2 ) break;
+            if ( actbox().accords_in_chain < 2 ) break;
             if ( msg.wParam == KeyCodAdd4 || msg.wParam == KeyCod4 )
             {
-              if ( --act_dbox().accord_act_index < 0) act_dbox().accord_act_index = 0;
+              if ( --actbox().accord_act_index < 0) actbox().accord_act_index = 0;
             }
-            else if ( ++act_dbox().accord_act_index >= act_dbox().accords_in_chain )
+            else if ( ++actbox().accord_act_index >= actbox().accords_in_chain )
             {
-              act_dbox().accord_act_index = act_dbox().accords_in_chain-1;
+              actbox().accord_act_index = actbox().accords_in_chain-1;
             }
-            act_dbox().SetupAccord( act_dbox().accord_act_index );
+            actbox().SetupAccord( actbox().accord_act_index );
             break;
         }
       }
@@ -214,15 +190,15 @@ int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Cmd, int Cm
           default: break;
 
           case KeyCodIns: case KeyCodAdd0: case KeyCodCtrl:
-            act_dbox().MaybeGenerateAccord(3); // возможное откл. аккорда
+            actbox().MaybeGenerateAccord(3); // возможное откл. аккорда
             break;
 
           case KeyCodAdd4: case KeyCod4: case KeyCodAdd6: case KeyCod6:
-            act_dbox().RegenAccord(); // если аккорд звучал - перенажимаем аккорд
+            actbox().RegenAccord(); // если аккорд звучал - перенажимаем аккорд
             break;
 
           case KeyCodP:
-            if ( act_dbox().LoadAccords(1) ) act_dbox().RegenAccord();
+            if ( actbox().LoadAccords(1) ) actbox().RegenAccord();
             break;
 
           // переключение midi инструментов по клавишам F1...F8
@@ -238,8 +214,8 @@ int WINAPI WinMain(HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR Cmd, int Cm
 
           // установим нужный номер инструмента и отобразим его на диалогпанели
           setup_instrument:
-            act_dbox().SetupInstrument(instrument_number);
-            act_dbox().RegenAccord(); // если аккорд звучал - перенажимаем аккорд
+            MusicDialogBoxCtrl::SetInstrument(instrument_number);
+            actbox().RegenAccord(); // если аккорд звучал - перенажимаем аккорд
             break;
         }
       }

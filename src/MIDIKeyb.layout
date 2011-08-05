@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release Win32" />
+	<File name="amain.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="162" topLine="0" />
+	</File>
+	<File name="amain.h" open="0" top="0" tabpos="1">
+		<Cursor position="236" topLine="0" />
+	</File>
+	<File name="dichotic.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2163" topLine="58" />
+	</File>
+	<File name="dichotic.h" open="0" top="0" tabpos="0">
+		<Cursor position="10752" topLine="231" />
+	</File>
+	<File name="files.h" open="0" top="0" tabpos="0">
+		<Cursor position="8487" topLine="131" />
+	</File>
+	<File name="music.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="69916" topLine="1398" />
+	</File>
+	<File name="music.h" open="0" top="0" tabpos="3">
+		<Cursor position="2517" topLine="9" />
+	</File>
+	<File name="music_files.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="22225" topLine="406" />
+	</File>
+	<File name="music_files.h" open="0" top="0" tabpos="0">
+		<Cursor position="127" topLine="0" />
+	</File>
+	<File name="stdafx.h" open="0" top="0" tabpos="0">
+		<Cursor position="248" topLine="0" />
+	</File>
+	<File name="tools.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2494" topLine="65" />
+	</File>
+	<File name="tools.h" open="0" top="0" tabpos="0">
+		<Cursor position="10356" topLine="175" />
+	</File>
+	<File name="unicode.h" open="0" top="0" tabpos="0">
+		<Cursor position="104" topLine="0" />
+	</File>
+	<File name="win.h" open="0" top="0" tabpos="0">
+		<Cursor position="21008" topLine="488" />
+	</File>
+	<File name="win_tools.h" open="0" top="0" tabpos="2">
+		<Cursor position="320" topLine="0" />
+	</File>
+	<File name="winfile.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="7944" topLine="158" />
+	</File>
+	<File name="winfile.h" open="0" top="0" tabpos="0">
+		<Cursor position="686" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

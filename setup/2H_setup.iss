@@ -3,7 +3,7 @@
 MessagesFile=compiler:Russian-18-3.0.5.isl
 
 AppName=Dichotic Harmony Project
-AppVerName=Dichotic Harmony Project. Version 3.01 from March, 2011.
+AppVerName=Dichotic Harmony Project. Version 3.04 from August, 2011.
 AppCopyright=Copyright © 2010 Vadim Madgazin
 DefaultDirName={pf}\Dichotic Harmony Project
 DefaultGroupName=Dichotic Harmony Project

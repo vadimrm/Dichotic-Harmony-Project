@@ -1,9 +1,10 @@
 ﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by MIDIKeyb.rc
+// Used by 2HAccGen.rc
 //
 #define IDD_Dialog0                     101
 #define IDD_Dialog1                     102
+#define IDD_Dialog2                     103
 #define IDI_ICON1                       108
 #define IDC_Note_Voice_1                1021
 #define IDC_Note_Voice_2                1022
@@ -17,9 +18,6 @@
 #define IDC_Note_Voice_10               1030
 #define IDC_Note_Voice_11               1031
 #define IDC_Note_Voice_12               1032
-#define IDC_Note_Voice_13               1033
-#define IDC_Note_Voice_14               1034
-#define IDC_Note_Voice_15               1035
 #define IDC_Pan_Voice_1                 1041
 #define IDC_Pan_Voice_2                 1042
 #define IDC_Pan_Voice_3                 1043
@@ -32,25 +30,19 @@
 #define IDC_Pan_Voice_10                1050
 #define IDC_Pan_Voice_11                1051
 #define IDC_Pan_Voice_12                1052
-#define IDC_Pan_Voice_13                1053
-#define IDC_Pan_Voice_14                1054
-#define IDC_Pan_Voice_15                1055
-#define IDC_Enable_Voice_1              1061
-#define IDC_Enable_Voice_2              1062
-#define IDC_Enable_Voice_3              1063
-#define IDC_Enable_Voice_4              1064
-#define IDC_Enable_Voice_5              1065
-#define IDC_Enable_Voice_6              1066
-#define IDC_Enable_Voice_7              1067
-#define IDC_Enable_Voice_8              1068
-#define IDC_Enable_Voice_9              1069
-#define IDC_Enable_Voice_10             1070
-#define IDC_Enable_Voice_11             1071
-#define IDC_Enable_Voice_12             1072
-#define IDC_Enable_Voice_13             1073
-#define IDC_Enable_Voice_14             1074
-#define IDC_Enable_Voice_15             1075
-#define IDC_MidiOutDevice                     1101
+#define IDC_Switchon_Voice_1            1061
+#define IDC_Switchon_Voice_2            1062
+#define IDC_Switchon_Voice_3            1063
+#define IDC_Switchon_Voice_4            1064
+#define IDC_Switchon_Voice_5            1065
+#define IDC_Switchon_Voice_6            1066
+#define IDC_Switchon_Voice_7            1067
+#define IDC_Switchon_Voice_8            1068
+#define IDC_Switchon_Voice_9            1069
+#define IDC_Switchon_Voice_10           1070
+#define IDC_Switchon_Voice_11           1071
+#define IDC_Switchon_Voice_12           1072
+#define IDC_MidiOutDevice               1101
 #define IDC_GM_Instrument               1102
 #define IDC_STATIC_LEFT                 1103
 #define IDC_STATIC_MID                  1104
@@ -62,8 +54,8 @@
 #define IDC_BUTTON_WWW                  1116
 #define IDC_CHECK_Dichotic_Output       1119
 #define IDC_CHECK_Swap_Output           1120
-#define IDC_SLIDER_Volume               1121
-#define IDC_STATIC_Volume               1122
+#define IDC_SLIDER_Accord_Volume        1121
+#define IDC_STATIC_Accord_Volume        1122
 #define IDC_SLIDER_Transposition        1123
 #define IDC_STATIC_Transposition        1124
 #define IDC_V1V3_INC                    1125
@@ -78,48 +70,54 @@
 #define IDC_V10V12_INC                  1134
 #define IDC_V10V12_0                    1135
 #define IDC_V10V12_DEC                  1136
-#define IDC_V13V15_INC                  1137
-#define IDC_V13V15_0                    1138
-#define IDC_V13V15_DEC                  1139
-#define IDC_Enable_All_Voices           1140
-#define IDC_Pan_All_Voices              1141
-#define IDC_Renumber_All_Notes          1142
+#define IDC_All_Voices_Switch           1140
+#define IDC_All_Pan_Switch              1141
 #define IDC_V1V15_0                     1143
 #define IDC_Save_Accord                 1144
 #define IDC_Load_Accords                1145
-#define IDC_SLIDER_Duration             1146
-#define IDC_SLIDER_Temp                 1147
-#define IDC_SLIDER_Accord_number        1148
+#define IDC_SLIDER_Accord_Duration      1146
+#define IDC_SLIDER_Accord_Temp          1147
+#define IDC_SLIDER_Accord_Number        1148
 #define IDC_STATIC_Temp                 1149
 #define IDC_STATIC_Duration             1150
-#define IDC_STATIC_Accord_number        1151
+#define IDC_STATIC_Accord_Number        1151
 #define IDC_Play_Stop                   1152
 #define IDC_Rewind                      1153
 #define IDC_CHECK_Loop_Chain            1154
-#define IDC_EDIT_Accord_Comment         1155
-#define IDC_CHECK_Smart_Voices          1156
+#define IDC_EDIT_Accords_Chain_Comment  1155
+#define IDC_CHECK_With_Unisons          1156
 #define IDC_Save_Accords_Chain          1157
 #define IDC_Append_Accord               1158
 #define IDC_SLIDER_Chain_Speed          1159
 #define IDC_STATIC_Chain_Speed          1160
-#define IDC_CHECK_Dont_Change_GM_Instrument 1161
+#define IDC_CHECK_Dont_Change_GM_Instr  1161
 #define IDC_CHECK_Edit_Comment          1162
-#define IDC_CHECK_Enable_Left_Pan       1163
-#define IDC_CHECK_Enable_Mid_Pan        1164
-#define IDC_CHECK_Enable_Right_Pan      1165
+#define IDC_CHECK_Switchon_Left_Pan     1163
+#define IDC_CHECK_Switchon_Mid_Pan      1164
+#define IDC_CHECK_Switchon_Right_Pan    1165
 #define IDC_STATIC_Uniq_Notes           1166
-#define IDC_CHECK_Notes_12              1167
+#define IDC_CHECK_One_Octave            1167
 #define IDC_Sort_Similar_Accords        1168
 #define IDC_Add_Inverse_Pan_Accords     1169
 #define IDC_CHECK_Sort_Mode             1170
 #define IDC_Del_Identic2and2            1171
 #define IDC_Del_Identic3and3            1172
 #define IDC_CHECK_Big_Duration          1173
-#define IDC_CHECK_File_2H_Converter     1174
-#define IDC_Accords_Multi_2             1175
-#define IDC_Accords_Multi_3             1176
-#define IDC_CHECK_AM_Octave_Shift       1177
-#define IDC_CHECK_Edit_Sequence         1178
+#define IDC_CHECK_Save_With_Manipuls    1174
+#define IDC_CHECK_Edit_Sequence         1175
+#define IDC_CHECK_Zero_Ground_Notes     1176
+#define IDC_CHECK_Dont_Save_Empty_Voices 1177
+#define IDC_CHECK_Show_Sorted_Notes     1178
+#define IDC_CHECK_Mute_Sound            1179
+#define IDC_CHECK_Converter_Mode        1180
+#define IDC_CHECK_Converter_Auto        1181
+#define IDC_CHECK_Converter_Mirror_Accords 1182
+#define IDC_CHECK_Converter_With_Unisons 1183
+#define IDC_CHECK_No_Sound              1184
+#define IDC_SLIDER_Stereo_Base          1185
+#define IDC_STATIC_Stereo_Base          1186
+#define IDC_SLIDER_Notes_Shift          1187
+#define IDC_STATIC_Notes_Shift          1188
 
 // Next default values for new objects
 // 
@@ -127,7 +125,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        110
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1179
+#define _APS_NEXT_CONTROL_VALUE         1189
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

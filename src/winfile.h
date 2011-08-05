@@ -33,7 +33,7 @@ class MapFile
   int fsize; // его длина в байтах, определяется только при CreateMapFile()!
 
 public:
-  MapFile():fhandle(0),fmem(0),fsize(0),fname() {}
+  MapFile():fhandle(0),fmem(0),fname(),fsize(0) {}
   ~MapFile() { Close(); }
 
   // создаем и открываем мапфайл, запоминаем имя и размер мапфайла
