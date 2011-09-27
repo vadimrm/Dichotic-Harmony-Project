@@ -4,21 +4,23 @@
 
 enum CheckCtrlIndex
 {
-  Generate_Accord,      Switchon_Left_Pan,        Switchon_Mid_Pan,       Switchon_Right_Pan,     Loop_Chain, 
-  Edit_Sequence,        Save_With_Manipuls,       Sort_Mode,              Big_Duration,           One_Octave,
-  Dont_Change_GM_Instr, Edit_Comment,             With_Unisons,           Dichotic_Output,        Swap_Output,
-  Zero_Ground_Notes,    Dont_Save_Empty_Voices,   Show_Sorted_Notes,      Mute_Sound,             Converter_Mode,
-  Converter_Auto,       Converter_Mirror_Accords, Converter_With_Unisons, No_Sound,
+  Generate_Accord,          Switchon_Left_Pan,       Switchon_Mid_Pan, Switchon_Right_Pan, Loop_Sequence, 
+  Edit_Sequence,            Save_With_Manipuls,      Sort_Mode,        Big_Duration,       One_Octave,
+  Dont_Change_GM_Instr,     Edit_Comment,            With_Unisons,     Dichotic_Output,    Swap_Output,
+  Zero_Ground_Notes,        Show_Sorted_Notes,       Mute_Sound,       Converter_Mode,     Converter_Auto,
+  Converter_Mirror_Accords, Converter_With_Unisons,  No_Sound,
 };
 
-enum ButtonCtrlIndex { Play_Stop, Rewind, Save_Accords_Chain, };
+enum ButtonCtrlIndex { Play_Stop, Rewind, Save_Accords_Sequence, Make_Voices_Combinations, Press_Sequence, Sort_Sequence };
 
 enum TextSliderCtrlIndex
-{ Accord_Number, Chain_Speed, Accord_Volume, Transposition, Accord_Duration, Accord_Temp, Stereo_Base, Notes_Shift };
+{ Accord_Number, Sequence_Speed, Accord_Volume, Transposition, Accord_Duration, Accord_Temp, Stereo_Base, Notes_Shift };
 
 enum ComboBoxCtrlIndex { GM_Instrument, MidiOutDevice, };
 
-enum EditCtrlIndex { Accords_Chain_Comment, };
+enum EditCtrlIndex { Accords_Sequence_Comment, };
+
+enum SpinEditCtrlIndex { Voices_Combinations, };
 
 enum TextCtrlIndex { Left_Notes, Mid_Notes, Right_Notes, Total_Diss, Uniq_Notes, };
 
@@ -30,13 +32,13 @@ class MusicDialogBoxCtrl : public DialogBoxCtrl
   static const int timer_msec = 10; // мсек, период генерации WM_TIMER, точность времени нот! < 10 улучшений не даёт!
   static const int MAX_CONVERTER_VOICES = 15; // аккорды с большим числом голосов подвешивают код при ConverterMode
 
-  static const int MAX_ACCORDS = 5000; // размер массива аккордов accords_chain (макс. число аккордов в секвенции)
-  Ar <DichoticAccord> accords_chain; // секвенция аккордов
-  ChainHeader cheader; // хедер секвенции, из файла или сделанный вручную
+  static const int MAX_ACCORDS = 7000; // размер массива аккордов accords_sequence (макс. число аккордов в секвенции)
+  Ar <DichoticAccord> accords_sequence; // секвенция аккордов
+  SequenceHeader cheader; // хедер секвенции, из файла или сделанный вручную
 
-  int accords_in_chain; // количество аккордов в загруженной секвенции
+  int accords_in_sequence; // количество аккордов в загруженной секвенции
   int accord_act_index; // текущий индекс проигрываемого (или редактируемого) аккорда секвенции
-  int play_accords_chain; // флаг проигрывания секвенции: 0=стоп, 1=старт, 2=продолжение проигрывания
+  int play_accords_sequence; // флаг проигрывания секвенции: 0=стоп, 1=старт, 2=продолжение проигрывания
 
   // флаг для правильного "перенажатия" аккорда (нужен из-за наличия и кнопки и хоткея генерации)
   int gen_state; // 0 нет генерации, 1 начало генерации, 2 генерация, 3 конец генерации аккорда
@@ -55,11 +57,11 @@ public:
   MusicDialogBoxCtrl()
   {
     cheader.clear();
-    accords_in_chain = 0;
+    accords_in_sequence = 0;
     accord_act_index = 0;
-    play_accords_chain = 0;
+    play_accords_sequence = 0;
     gen_state = 0;
-    accords_chain.renew(MAX_ACCORDS, false);
+    accords_sequence.renew(MAX_ACCORDS, false);
     dvoices.renew(DichoticAccord::MAX_ACC_VOICES, false);
   }
 
@@ -104,6 +106,13 @@ public:
   // если есть строка file, то формат 0 грузим молча из этого файла!
   bool LoadAccords( int format, const wchar_t *file = UNI_NULL_STR );
 
+  // если аргумент = false: выводим текст числа сочетаний голосов на кнопке Make_Voices_Combinations
+  // если аргумент = true : дополнительно делаем секвенцию сочетаний голосов аккорда из их регуляторов
+  bool MakeVoicesCombinations(bool make = false); // возвращает false если секвенция не создана
+
+  void SortSequenceDiss(); // сортировка аккордов секвенции в порядке возрастания полных диссонансов аккорда
+  void PressSequenceAccords(); // сжатие секвенции путём удаления голосов-пауз из аккордов
+
   void ConverterModeMain(bool Seq = false); // управление конвертацией, при true конвертация всей секвенции
   bool ConverterModeExecute(DichoticAccord acc1h); // false если невозможна 2H конвертация аккорда acc1h
 
@@ -131,15 +140,15 @@ public:
 
   // при mode=0 (Save_Accord       ) записываем текущий аккорд в файл, если файл есть - стираем и перезаписываем его
   // при      1 (Append_Accord     ) добавляем аккорд к сушествующему файлу, а если файла нет - пишем его с нуля!
-  // при      2 (Save_Accords_Chain) записываем секвенцию аккордов в файл, если файл есть - стираем и перезаписываем его
+  // при      2 (Save_Accords_Sequence) записываем секвенцию аккордов в файл, если файл есть - стираем и перезаписываем его
   // при      3 (запись секвенции после сортировки) то же что и при 2, кроме замены текущего аккорда!
   // при (2) сначала текущий звучащий аккорд копируется в текущее место секвенции, т.о. возможно её редактирование!
   // при (0,1,3) секвенцию не меняем!
   // если чекбокс Edit_Sequence не выбран - секвенцию не меняем и при mode=2!
   void SaveMusic(int mode);
 
-  // считываем контролы общих параметров, возвращаем их в виде ChainHeader
-  ChainHeader ChainHeaderFromControls();
+  // считываем контролы общих параметров, возвращаем их в виде SequenceHeader
+  SequenceHeader SequenceHeaderFromControls();
 
   // кнопка циклического переключения КНОПОК всех панорам лево-центр-право
   // возвращает true если хотя бы один голос был включен (звучал)
@@ -160,10 +169,10 @@ public:
   void RegenAccord(); // если аккорд звучал - перенажимаем аккорд
   void RewindAccords(); // копируем начальный аккорд секвенции в аккорд на диалогпанели
   void Play_StopAccords(); // включаем или останавливаем проигрывание секвенции
-  bool IsPlaying() const { return (play_accords_chain == 2); }
+  bool IsPlaying() const { return (play_accords_sequence == 2); }
   void SetupAccord(int index); // копируем аккорд из массива с индексом index в аккорд на диалогпанели
   void ResetMaxDuration(); // устанавливаем предел слайдера Accord_Duration
-  void SetupAccords(int num_accords); // подготовка контролов для новой секвенции в accords_chain и cheader
+  void SetupAccords(int num_accords); // подготовка контролов для новой секвенции в accords_sequence и cheader
 
   // выводим на диалогбоксе номера нот в соответствующих им позициях панорамы,
   // также выводим суммарный диссонанс аккорда и др.

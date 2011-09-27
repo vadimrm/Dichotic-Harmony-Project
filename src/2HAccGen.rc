@@ -64,135 +64,150 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Dialog
 //
 
-IDD_Dialog0 DIALOGEX 0, 0, 548, 449
+IDD_Dialog0 DIALOGEX 0, 0, 548, 487
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU
 CAPTION "(c) 2010 V.Madgazin"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    COMBOBOX        IDC_MidiOutDevice,388,41,147,98,CBS_DROPDOWNLIST | WS_VSCROLL
-    LTEXT           "GM Instrument",IDC_STATIC,324,66,58,8
-    COMBOBOX        IDC_GM_Instrument,388,64,147,145,CBS_DROPDOWNLIST | WS_VSCROLL
-    LTEXT           "MIDI  Out Device",IDC_STATIC,324,43,58,8
-    LTEXT           "Mid:",IDC_STATIC_MID,197,409,246,8
-    LTEXT           "Right:",IDC_STATIC_RIGHT,197,428,246,8
-    LTEXT           "Left:",IDC_STATIC_LEFT,197,392,246,8
-    CONTROL         "Generate Accord",IDC_CHECK_Generate_Accord,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,123,309,85,15
-    PUSHBUTTON      "HELP",IDC_BUTTON_HELP,13,38,60,15
-    PUSHBUTTON      "CLOSE",IDC_BUTTON_CLOSE,240,38,60,15
-    PUSHBUTTON      "WEB SITE",IDC_BUTTON_WWW,126,38,60,15
-    LTEXT           "Dichotic Diss  ",IDC_STATIC_Total_Diss,102,429,65,8
-    CONTROL         "",IDC_Pan_Voice_1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,63,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,63,60,15
-    CONTROL         "Dichotic Output",IDC_CHECK_Dichotic_Output,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,409,64,10
-    CONTROL         "Swap Output",IDC_CHECK_Swap_Output,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,427,55,10
-    CONTROL         "",IDC_SLIDER_Accord_Volume,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,104,158,16
-    LTEXT           "Volume",IDC_STATIC_Accord_Volume,324,108,58,8
-    CONTROL         "",IDC_SLIDER_Transposition,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,122,158,16
-    LTEXT           "Transposition",IDC_STATIC_Transposition,324,126,58,8
-    CONTROL         "",IDC_Note_Voice_1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,63,148,15
-    CONTROL         "",IDC_Pan_Voice_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,81,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,81,60,15
-    CONTROL         "",IDC_Note_Voice_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,81,148,15
-    CONTROL         "",IDC_Pan_Voice_3,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,100,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,100,60,15
-    CONTROL         "",IDC_Note_Voice_3,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,100,148,15
-    CONTROL         "",IDC_Pan_Voice_4,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,126,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,126,60,15
-    CONTROL         "",IDC_Note_Voice_4,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,126,148,15
-    CONTROL         "",IDC_Pan_Voice_5,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,144,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,144,60,15
-    CONTROL         "",IDC_Note_Voice_5,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,144,148,15
-    CONTROL         "",IDC_Pan_Voice_6,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,162,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,162,60,15
-    CONTROL         "",IDC_Note_Voice_6,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,162,148,15
-    CONTROL         "",IDC_Pan_Voice_7,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,188,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,188,60,15
-    CONTROL         "",IDC_Note_Voice_7,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,188,148,15
-    CONTROL         "",IDC_Pan_Voice_8,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,206,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,206,60,15
-    CONTROL         "",IDC_Note_Voice_8,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,206,148,15
-    CONTROL         "",IDC_Pan_Voice_9,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,224,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,224,60,15
-    CONTROL         "",IDC_Note_Voice_9,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,224,148,15
-    CONTROL         "",IDC_Pan_Voice_10,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,249,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_10,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,249,60,15
-    CONTROL         "",IDC_Note_Voice_10,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,249,148,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_11,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,267,60,15
-    CONTROL         "",IDC_Note_Voice_11,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,267,148,15
-    CONTROL         "",IDC_Pan_Voice_11,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,267,31,15
-    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_12,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,285,60,15
-    CONTROL         "",IDC_Note_Voice_12,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,285,148,15
-    CONTROL         "",IDC_Pan_Voice_12,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,284,31,15
-    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,133,116,120,8
-    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,133,178,120,8
-    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,133,240,120,8
-    PUSHBUTTON      "+1",IDC_V1V3_INC,284,63,16,15
-    PUSHBUTTON      "0",IDC_V1V3_0,284,81,16,15
-    PUSHBUTTON      "-1",IDC_V1V3_DEC,284,100,16,15
-    PUSHBUTTON      "+1",IDC_V4V6_INC,284,125,16,15
-    PUSHBUTTON      "0",IDC_V4V6_0,284,144,16,15
-    PUSHBUTTON      "-1",IDC_V4V6_DEC,284,162,16,15
-    PUSHBUTTON      "+1",IDC_V7V9_INC,284,187,16,15
-    PUSHBUTTON      "0",IDC_V7V9_0,284,205,16,15
-    PUSHBUTTON      "-1",IDC_V7V9_DEC,284,224,16,15
-    PUSHBUTTON      "+1",IDC_V10V12_INC,284,249,16,15
-    PUSHBUTTON      "0",IDC_V10V12_0,284,267,16,15
-    PUSHBUTTON      "-1",IDC_V10V12_DEC,284,286,16,15
-    PUSHBUTTON      "All 0",IDC_V1V15_0,275,309,25,15
-    PUSHBUTTON      "Voices Switch",IDC_All_Voices_Switch,13,309,60,15
-    PUSHBUTTON      "Pan",IDC_All_Pan_Switch,83,309,25,15
-    PUSHBUTTON      "Save Accord",IDC_Save_Accord,318,211,60,15
-    PUSHBUTTON      "Load Accord(s)",IDC_Load_Accords,451,186,85,15
-    CONTROL         "",IDC_SLIDER_Accord_Temp,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,141,158,15
-    CONTROL         "",IDC_SLIDER_Accord_Duration,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,160,158,15
-    CONTROL         "",IDC_SLIDER_Accord_Number,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,258,158,15
-    LTEXT           "Temp",IDC_STATIC_Temp,324,145,58,8
-    LTEXT           "Duration",IDC_STATIC_Duration,324,164,58,8
-    LTEXT           "Accord",IDC_STATIC_Accord_Number,319,262,69,8
-    PUSHBUTTON      "Play/Stop",IDC_Play_Stop,451,305,85,15
-    PUSHBUTTON      "Rewind",IDC_Rewind,384,305,60,15
-    CONTROL         "Loop Chain",IDC_CHECK_Loop_Chain,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,319,308,49,10
-    EDITTEXT        IDC_EDIT_Accords_Chain_Comment,13,12,445,14,ES_AUTOHSCROLL
-    CONTROL         "With Unisons",IDC_CHECK_With_Unisons,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,391,64,10
-    PUSHBUTTON      "Save Ac-s Chain",IDC_Save_Accords_Chain,389,211,147,15
-    PUSHBUTTON      "Append Accord",IDC_Append_Accord,318,186,60,15
-    CONTROL         "Edit Comment",IDC_CHECK_Edit_Comment,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,474,12,60,14
-    CONTROL         "",IDC_SLIDER_Chain_Speed,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,279,158,15
-    LTEXT           "Chain Speed",IDC_STATIC_Chain_Speed,319,283,65,8
+    COMBOBOX        IDC_MidiOutDevice,388,59,147,98,CBS_DROPDOWNLIST | WS_VSCROLL
+    LTEXT           "GM Instrument",IDC_STATIC,324,84,58,8
+    COMBOBOX        IDC_GM_Instrument,388,82,147,145,CBS_DROPDOWNLIST | WS_VSCROLL
+    LTEXT           "MIDI  Out Device",IDC_STATIC,324,61,58,8
+    LTEXT           "Mid:",IDC_STATIC_MID,197,446,246,8
+    LTEXT           "Right:",IDC_STATIC_RIGHT,197,465,246,8
+    LTEXT           "Left:",IDC_STATIC_LEFT,197,429,246,8
+    CONTROL         "Generate Accord",IDC_CHECK_Generate_Accord,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,123,346,85,15
+    PUSHBUTTON      "HELP",IDC_BUTTON_HELP,318,33,60,15
+    PUSHBUTTON      "CLOSE",IDC_BUTTON_CLOSE,474,33,60,15
+    PUSHBUTTON      "WEB SITE",IDC_BUTTON_WWW,397,33,60,15
+    LTEXT           "Dichotic Diss  ",IDC_STATIC_Total_Diss,102,466,65,8
+    CONTROL         "",IDC_Pan_Voice_1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,34,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_1,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,34,60,15
+    CONTROL         "Dichotic Output",IDC_CHECK_Dichotic_Output,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,446,64,10
+    CONTROL         "Swap Output",IDC_CHECK_Swap_Output,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,464,55,10
+    CONTROL         "",IDC_SLIDER_Accord_Volume,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,122,158,16
+    LTEXT           "Volume",IDC_STATIC_Accord_Volume,324,126,58,8
+    CONTROL         "",IDC_SLIDER_Transposition,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,140,158,16
+    LTEXT           "Transposition",IDC_STATIC_Transposition,324,144,58,8
+    CONTROL         "",IDC_Note_Voice_1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,34,148,15
+    CONTROL         "",IDC_Pan_Voice_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,52,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_2,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,52,60,15
+    CONTROL         "",IDC_Note_Voice_2,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,52,148,15
+    CONTROL         "",IDC_Pan_Voice_3,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,71,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_3,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,71,60,15
+    CONTROL         "",IDC_Note_Voice_3,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,71,148,15
+    CONTROL         "",IDC_Pan_Voice_4,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,97,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_4,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,97,60,15
+    CONTROL         "",IDC_Note_Voice_4,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,97,148,15
+    CONTROL         "",IDC_Pan_Voice_5,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,115,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_5,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,115,60,15
+    CONTROL         "",IDC_Note_Voice_5,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,115,148,15
+    CONTROL         "",IDC_Pan_Voice_6,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,133,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_6,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,133,60,15
+    CONTROL         "",IDC_Note_Voice_6,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,133,148,15
+    CONTROL         "",IDC_Pan_Voice_7,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,159,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_7,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,159,60,15
+    CONTROL         "",IDC_Note_Voice_7,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,159,148,15
+    CONTROL         "",IDC_Pan_Voice_8,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,177,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_8,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,177,60,15
+    CONTROL         "",IDC_Note_Voice_8,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,177,148,15
+    CONTROL         "",IDC_Pan_Voice_9,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,195,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_9,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,195,60,15
+    CONTROL         "",IDC_Note_Voice_9,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,195,148,15
+    CONTROL         "",IDC_Pan_Voice_10,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,220,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_10,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,220,60,15
+    CONTROL         "",IDC_Note_Voice_10,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,220,148,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_11,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,238,60,15
+    CONTROL         "",IDC_Note_Voice_11,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,238,148,15
+    CONTROL         "",IDC_Pan_Voice_11,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,238,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_12,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,256,60,15
+    CONTROL         "",IDC_Note_Voice_12,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,256,148,15
+    CONTROL         "",IDC_Pan_Voice_12,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,255,31,15
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,133,87,120,8
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,133,149,120,8
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,133,211,120,8
+    PUSHBUTTON      "+1",IDC_V1V3_INC,284,34,16,15
+    PUSHBUTTON      "0",IDC_V1V3_0,284,52,16,15
+    PUSHBUTTON      "-1",IDC_V1V3_DEC,284,71,16,15
+    PUSHBUTTON      "+1",IDC_V4V6_INC,284,96,16,15
+    PUSHBUTTON      "0",IDC_V4V6_0,284,115,16,15
+    PUSHBUTTON      "-1",IDC_V4V6_DEC,284,133,16,15
+    PUSHBUTTON      "+1",IDC_V7V9_INC,284,158,16,15
+    PUSHBUTTON      "0",IDC_V7V9_0,284,176,16,15
+    PUSHBUTTON      "-1",IDC_V7V9_DEC,284,195,16,15
+    PUSHBUTTON      "+1",IDC_V10V12_INC,284,220,16,15
+    PUSHBUTTON      "0",IDC_V10V12_0,284,238,16,15
+    PUSHBUTTON      "-1",IDC_V10V12_DEC,284,257,16,15
+    PUSHBUTTON      "All 0",IDC_ALL_NOTES_0,275,346,25,15
+    PUSHBUTTON      "Voices Switch",IDC_All_Voices_Switch,13,346,60,15
+    PUSHBUTTON      "Pan",IDC_All_Pan_Switch,83,346,25,15
+    PUSHBUTTON      "Save Accord",IDC_Save_Accord,318,229,60,15
+    PUSHBUTTON      "Load Accord(s)",IDC_Load_Accords,451,204,85,15
+    CONTROL         "",IDC_SLIDER_Accord_Temp,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,159,158,15
+    CONTROL         "",IDC_SLIDER_Accord_Duration,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,178,158,15
+    CONTROL         "",IDC_SLIDER_Accord_Number,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,276,158,15
+    LTEXT           "Temp",IDC_STATIC_Temp,324,163,58,8
+    LTEXT           "Duration",IDC_STATIC_Duration,324,182,58,8
+    LTEXT           "Accord",IDC_STATIC_Accord_Number,319,280,69,8
+    PUSHBUTTON      "Play/Stop",IDC_Play_Stop,318,321,60,15
+    PUSHBUTTON      "Rewind",IDC_Rewind,384,321,60,15
+    CONTROL         "Loop Sequence",IDC_CHECK_Loop_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,450,323,87,10
+    EDITTEXT        IDC_EDIT_Accords_Sequence_Comment,13,10,445,14,ES_AUTOHSCROLL
+    CONTROL         "With Unisons",IDC_CHECK_With_Unisons,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,428,64,10
+    PUSHBUTTON      "Save Ac-s Sequence",IDC_Save_Accords_Sequence,389,229,147,15
+    PUSHBUTTON      "Append Accord",IDC_Append_Accord,318,204,60,15
+    CONTROL         "Text Editing",IDC_CHECK_Edit_Comment,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,474,10,60,15
+    CONTROL         "",IDC_SLIDER_Sequence_Speed,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,297,158,15
+    LTEXT           "Sequence Speed",IDC_STATIC_Sequence_Speed,319,301,64,8
     CONTROL         "Don't Change General Midi Instrument",IDC_CHECK_Dont_Change_GM_Instr,
-                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,389,88,145,10
-    CONTROL         "",IDC_CHECK_Switchon_Left_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,391,9,10
-    CONTROL         "",IDC_CHECK_Switchon_Mid_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,409,9,10
-    CONTROL         "",IDC_CHECK_Switchon_Right_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,427,9,10
-    LTEXT           "Unique Notes",IDC_STATIC_Uniq_Notes,102,411,65,8
-    CONTROL         "One Octave",IDC_CHECK_One_Octave,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,102,391,55,10
-    PUSHBUTTON      "Del Identic (3+3)",IDC_Del_Identic3and3,384,334,60,15
-    PUSHBUTTON      "Sort Similar Accords",IDC_Sort_Similar_Accords,451,334,85,15
-    PUSHBUTTON      "Add Inverse Pan",IDC_Add_Inverse_Pan_Accords,318,334,60,15
-    CONTROL         "Sort Mode",IDC_CHECK_Sort_Mode,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,451,357,85,15
-    PUSHBUTTON      "Del Identic (2+2)",IDC_Del_Identic2and2,384,357,60,15
-    CONTROL         "Big Duration",IDC_CHECK_Big_Duration,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,389,189,54,10
+                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,389,106,145,10
+    CONTROL         "",IDC_CHECK_Switchon_Left_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,428,9,10
+    CONTROL         "",IDC_CHECK_Switchon_Mid_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,446,9,10
+    CONTROL         "",IDC_CHECK_Switchon_Right_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,464,9,10
+    LTEXT           "Unique Notes",IDC_STATIC_Uniq_Notes,102,448,65,8
+    CONTROL         "One Octave",IDC_CHECK_One_Octave,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,102,428,55,10
+    PUSHBUTTON      "Del Identic (3+3)",IDC_Del_Identic3and3,384,346,60,15
+    PUSHBUTTON      "Sort Similar Accords",IDC_Sort_Similar_Accords,451,346,85,15
+    PUSHBUTTON      "Add Inverse Pan",IDC_Add_Inverse_Pan_Accords,318,346,60,15
+    CONTROL         "Sort Mode",IDC_CHECK_Sort_Mode,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,451,369,85,15
+    PUSHBUTTON      "Del Identic (2+2)",IDC_Del_Identic2and2,384,369,60,15
+    CONTROL         "Big Duration",IDC_CHECK_Big_Duration,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,389,207,54,10
     CONTROL         "Save with Manipulators",IDC_CHECK_Save_With_Manipuls,
-                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,319,239,90,10
-    CONTROL         "Edit Sequence",IDC_CHECK_Edit_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,318,360,60,10
+                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,450,257,87,10
+    CONTROL         "Edit Sequence",IDC_CHECK_Edit_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,318,372,60,10
     CONTROL         "Notes Show as Origin",IDC_CHECK_Zero_Ground_Notes,
-                    "Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,451,407,85,15
-    CONTROL         "Don't Save Empty Voices",IDC_CHECK_Dont_Save_Empty_Voices,
-                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,439,239,97,10
-    CONTROL         "Show Sorted Notes",IDC_CHECK_Show_Sorted_Notes,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,453,391,79,10
-    GROUPBOX        "Manipulators",IDC_STATIC,7,380,184,62,BS_LEFT
-    GROUPBOX        "Accord Notes",IDC_STATIC,193,380,347,62
-    CONTROL         "Mute Sound",IDC_CHECK_Mute_Sound,"Button",BS_AUTO3STATE | BS_PUSHLIKE | WS_TABSTOP,318,85,60,15
-    CONTROL         "2H Converter Mode",IDC_CHECK_Converter_Mode,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,360,78,10
-    CONTROL         "Auto Convert",IDC_CHECK_Converter_Auto,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,102,360,57,10
+                    "Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,451,442,85,15
+    CONTROL         "Show Sorted Notes",IDC_CHECK_Show_Sorted_Notes,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,453,428,79,10
+    GROUPBOX        "Manipulators",IDC_STATIC,7,417,184,62,BS_LEFT
+    GROUPBOX        "Accord Notes",IDC_STATIC,193,417,347,62
+    CONTROL         "Mute Sound",IDC_CHECK_Mute_Sound,"Button",BS_AUTO3STATE | BS_PUSHLIKE | WS_TABSTOP,318,103,60,15
+    CONTROL         "2H Converter Mode",IDC_CHECK_Converter_Mode,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,397,78,10
+    CONTROL         "Auto Convert",IDC_CHECK_Converter_Auto,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,102,397,57,10
     CONTROL         "Mirror Accords",IDC_CHECK_Converter_Mirror_Accords,
-                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,243,360,60,10
-    CONTROL         "With Unisons",IDC_CHECK_Converter_With_Unisons,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,360,55,10
-    CONTROL         "No Sound",IDC_CHECK_No_Sound,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,216,312,48,10
-    CONTROL         "",IDC_SLIDER_Stereo_Base,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,57,335,55,15
-    LTEXT           "Stereo",IDC_STATIC_Stereo_Base,14,338,38,8
-    CONTROL         "",IDC_SLIDER_Notes_Shift,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,335,148,15
-    LTEXT           "Shift",IDC_STATIC_Notes_Shift,274,338,30,8
+                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,243,397,60,10
+    CONTROL         "With Unisons",IDC_CHECK_Converter_With_Unisons,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,397,55,10
+    CONTROL         "No Sound",IDC_CHECK_No_Sound,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,216,349,48,10
+    CONTROL         "",IDC_SLIDER_Stereo_Base,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,57,373,55,15
+    LTEXT           "Stereo",IDC_STATIC_Stereo_Base,14,376,38,8
+    CONTROL         "",IDC_SLIDER_Notes_Shift,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,373,148,15
+    LTEXT           "Shift",IDC_STATIC_Notes_Shift,274,376,30,8
+    EDITTEXT        IDC_EDIT_Voices_Combinations,511,394,25,15,ES_AUTOHSCROLL
+    PUSHBUTTON      "Voices of 15 in Sequence of 6999 Accords",IDC_Make_Voices_Combinations,318,394,187,15
+    CONTROL         "",IDC_Pan_Voice_13,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,283,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_13,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,283,60,15
+    CONTROL         "",IDC_Note_Voice_13,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,283,148,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_14,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,301,60,15
+    CONTROL         "",IDC_Note_Voice_14,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,301,148,15
+    CONTROL         "",IDC_Pan_Voice_14,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,301,31,15
+    CONTROL         "v1 note 12+ ?",IDC_Switchon_Voice_15,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,13,319,60,15
+    CONTROL         "",IDC_Note_Voice_15,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,117,319,148,15
+    CONTROL         "",IDC_Pan_Voice_15,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,81,318,31,15
+    LTEXT           "C  C# D  D# E  F  F# G  G# A  A# B",IDC_STATIC,133,274,120,8
+    PUSHBUTTON      "+1",IDC_V13V15_INC,283,283,16,15
+    PUSHBUTTON      "0",IDC_V13V15_0,283,301,16,15
+    PUSHBUTTON      "-1",IDC_V13V15_DEC,283,320,16,15
+    PUSHBUTTON      "Press",IDC_Press_Sequence,318,254,60,15
+    PUSHBUTTON      "Sort",IDC_Sort_Sequence,384,254,60,15
 END
 
 IDD_Dialog1 DIALOGEX 0, 0, 548, 292
@@ -233,23 +248,23 @@ BEGIN
     PUSHBUTTON      "+1",IDC_V4V6_INC,284,102,16,15
     PUSHBUTTON      "0",IDC_V4V6_0,284,121,16,15
     PUSHBUTTON      "-1",IDC_V4V6_DEC,284,139,16,15
-    PUSHBUTTON      "All 0",IDC_V1V15_0,276,166,25,15
+    PUSHBUTTON      "All 0",IDC_ALL_NOTES_0,276,166,25,15
     PUSHBUTTON      "Voices Switch",IDC_All_Voices_Switch,12,166,60,15
     PUSHBUTTON      "Pan",IDC_All_Pan_Switch,83,166,25,15
     PUSHBUTTON      "Save Accord",IDC_Save_Accord,318,110,60,15
     PUSHBUTTON      "Load Accord(s)",IDC_Load_Accords,451,85,85,15
     CONTROL         "",IDC_SLIDER_Accord_Number,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,157,158,15
     LTEXT           "Accord",IDC_STATIC_Accord_Number,319,161,69,8
-    PUSHBUTTON      "Play/Stop",IDC_Play_Stop,451,202,85,15
-    PUSHBUTTON      "Rewind",IDC_Rewind,384,202,60,15
-    CONTROL         "Loop Chain",IDC_CHECK_Loop_Chain,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,319,205,49,10
-    EDITTEXT        IDC_EDIT_Accords_Chain_Comment,13,12,445,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Play/Stop",IDC_Play_Stop,386,201,60,15
+    PUSHBUTTON      "Rewind",IDC_Rewind,319,201,60,15
+    CONTROL         "Loop Sequence",IDC_CHECK_Loop_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,453,203,79,10
+    EDITTEXT        IDC_EDIT_Accords_Sequence_Comment,13,12,445,14,ES_AUTOHSCROLL
     CONTROL         "With Unisons",IDC_CHECK_With_Unisons,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,233,64,10
-    PUSHBUTTON      "Save Ac-s Chain",IDC_Save_Accords_Chain,389,110,147,15
+    PUSHBUTTON      "Save Ac-s Sequence",IDC_Save_Accords_Sequence,389,110,147,15
     PUSHBUTTON      "Append Accord",IDC_Append_Accord,318,85,60,15
     CONTROL         "Edit Comment",IDC_CHECK_Edit_Comment,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,473,12,60,14
-    CONTROL         "",IDC_SLIDER_Chain_Speed,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,176,158,15
-    LTEXT           "Chain Speed",IDC_STATIC_Chain_Speed,319,180,65,8
+    CONTROL         "",IDC_SLIDER_Sequence_Speed,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,176,158,15
+    LTEXT           "Sequence Speed",IDC_STATIC_Sequence_Speed,319,180,64,8
     CONTROL         "Don't Change General Midi Instrument",IDC_CHECK_Dont_Change_GM_Instr,
                     "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,387,63,145,10
     CONTROL         "",IDC_CHECK_Switchon_Left_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,233,9,10
@@ -262,8 +277,6 @@ BEGIN
     CONTROL         "Edit Sequence",IDC_CHECK_Edit_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,387,87,60,10
     CONTROL         "Notes Show as Origin",IDC_CHECK_Zero_Ground_Notes,
                     "Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,451,249,85,15
-    CONTROL         "Don't Save Empty Voices",IDC_CHECK_Dont_Save_Empty_Voices,
-                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,439,138,97,10
     CONTROL         "Show Sorted Notes",IDC_CHECK_Show_Sorted_Notes,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,453,233,79,10
     GROUPBOX        "Manipulators",-1,7,222,184,62,BS_LEFT
     GROUPBOX        "Accord Notes",-1,193,222,347,62
@@ -310,23 +323,20 @@ BEGIN
     PUSHBUTTON      "+1",IDC_V4V6_INC,284,102,16,15
     PUSHBUTTON      "0",IDC_V4V6_0,284,121,16,15
     PUSHBUTTON      "-1",IDC_V4V6_DEC,284,139,16,15
-    PUSHBUTTON      "All 0",IDC_V1V15_0,276,166,25,15
+    PUSHBUTTON      "All 0",IDC_ALL_NOTES_0,276,166,25,15
     PUSHBUTTON      "Voices Switch",IDC_All_Voices_Switch,12,166,60,15
     PUSHBUTTON      "Pan",IDC_All_Pan_Switch,83,166,25,15
     PUSHBUTTON      "Save Accord",IDC_Save_Accord,318,110,60,15
     PUSHBUTTON      "Load Accord(s)",IDC_Load_Accords,451,85,85,15
     CONTROL         "",IDC_SLIDER_Accord_Number,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,157,158,15
     LTEXT           "Accord",IDC_STATIC_Accord_Number,319,161,69,8
-    PUSHBUTTON      "Play/Stop",IDC_Play_Stop,451,202,85,15
-    PUSHBUTTON      "Rewind",IDC_Rewind,384,202,60,15
-    CONTROL         "Loop Chain",IDC_CHECK_Loop_Chain,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,319,205,49,10
-    EDITTEXT        IDC_EDIT_Accords_Chain_Comment,13,12,445,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Accords_Sequence_Comment,13,12,445,14,ES_AUTOHSCROLL
     CONTROL         "With Unisons",IDC_CHECK_With_Unisons,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,13,233,64,10
-    PUSHBUTTON      "Save Ac-s Chain",IDC_Save_Accords_Chain,389,110,147,15
+    PUSHBUTTON      "Save Ac-s Sequence",IDC_Save_Accords_Sequence,389,110,147,15
     PUSHBUTTON      "Append Accord",IDC_Append_Accord,318,85,60,15
     CONTROL         "Edit Comment",IDC_CHECK_Edit_Comment,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,473,12,60,14
-    CONTROL         "",IDC_SLIDER_Chain_Speed,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,176,158,15
-    LTEXT           "Chain Speed",IDC_STATIC_Chain_Speed,319,180,65,8
+    CONTROL         "",IDC_SLIDER_Sequence_Speed,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,383,176,158,15
+    LTEXT           "Sequence Speed",IDC_STATIC_Sequence_Speed,319,180,65,8
     CONTROL         "Don't Change General Midi Instrument",IDC_CHECK_Dont_Change_GM_Instr,
                     "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,387,63,145,10
     CONTROL         "",IDC_CHECK_Switchon_Left_Pan,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,177,233,9,10
@@ -339,14 +349,15 @@ BEGIN
     CONTROL         "Edit Sequence",IDC_CHECK_Edit_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,387,87,60,10
     CONTROL         "Notes Show as Origin",IDC_CHECK_Zero_Ground_Notes,
                     "Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,451,249,85,15
-    CONTROL         "Don't Save Empty Voices",IDC_CHECK_Dont_Save_Empty_Voices,
-                    "Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,439,138,97,10
     CONTROL         "Show Sorted Notes",IDC_CHECK_Show_Sorted_Notes,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,453,233,79,10
     GROUPBOX        "Manipulators",-1,7,222,184,62,BS_LEFT
     GROUPBOX        "Accord Notes",-1,193,222,347,62
     CONTROL         "Mute Sound",IDC_CHECK_Mute_Sound,"Button",BS_AUTO3STATE | BS_PUSHLIKE | WS_TABSTOP,318,60,60,15
     CONTROL         "Generate Accord",IDC_CHECK_Generate_Accord,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,122,166,85,15
     CONTROL         "No Sound",IDC_CHECK_No_Sound,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,215,169,48,10
+    PUSHBUTTON      "Play/Stop",IDC_Play_Stop,386,201,60,15
+    PUSHBUTTON      "Rewind",IDC_Rewind,319,201,60,15
+    CONTROL         "Loop Sequence",IDC_CHECK_Loop_Sequence,"Button",BS_AUTOCHECKBOX | BS_FLAT | WS_TABSTOP,453,203,79,10
 END
 
 
@@ -363,7 +374,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 541
         TOPMARGIN, 5
-        BOTTOMMARGIN, 442
+        BOTTOMMARGIN, 480
     END
 
     IDD_Dialog1, DIALOG

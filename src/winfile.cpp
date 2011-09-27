@@ -1,6 +1,7 @@
 ﻿// файловые классы и функции
 
 #include "stdafx.h"
+#include "stdafx2.h"
 
 // копирование строки (имени файла с расширением) и отбрасывание расширения
 void copy_wo_ext(wchar_t *dst, const wchar_t *src, int maxlen)

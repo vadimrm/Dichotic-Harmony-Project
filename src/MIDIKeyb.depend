@@ -1,14 +1,14 @@
 # depslib dependency file v1.0
-1309158611 source:k:\t_my_work\z_2h_accords_generator\2haccgen.rc
+1313391468 source:k:\t_my_work\z_2h_accords_generator\2haccgen.rc
 	"resource.h"
 	"afxres.h"
 
-1309157976 k:\t_my_work\z_2h_accords_generator\resource.h
+1313391507 k:\t_my_work\z_2h_accords_generator\resource.h
 
 1309165638 source:k:\t_my_work\z_2h_accords_generator\amain.cpp
 	"stdafx.h"
 
-1309169838 k:\t_my_work\z_2h_accords_generator\stdafx.h
+1313149850 k:\t_my_work\z_2h_accords_generator\stdafx.h
 	<windows.h>
 	<windowsx.h>
 	<shellapi.h>
@@ -26,6 +26,84 @@
 	<vector>
 	<algorithm>
 	<typeinfo>
+
+1309163311 k:\t_my_work\z_2h_accords_generator\unicode.h
+
+1313127287 k:\t_my_work\z_2h_accords_generator\tools.h
+
+1308136310 k:\t_my_work\z_2h_accords_generator\ar.h
+
+1307606279 k:\t_my_work\z_2h_accords_generator\random.h
+
+1308571824 k:\t_my_work\z_2h_accords_generator\files.h
+	<share.h>
+
+1308307213 k:\t_my_work\z_2h_accords_generator\winfile.h
+
+1302252863 k:\t_my_work\z_2h_accords_generator\win_kb.h
+
+1308738427 k:\t_my_work\z_2h_accords_generator\win_tools.h
+
+1310977074 k:\t_my_work\z_2h_accords_generator\midi_interface.h
+
+1308751388 k:\t_my_work\z_2h_accords_generator\amain.h
+
+1312961509 k:\t_my_work\z_2h_accords_generator\win.h
+
+1313393400 k:\t_my_work\z_2h_accords_generator\dichotic.h
+
+1308751362 k:\t_my_work\z_2h_accords_generator\music_files.h
+
+1313393982 k:\t_my_work\z_2h_accords_generator\music.h
+
+1313149710 source:k:\t_my_work\z_2h_accords_generator\files.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149717 source:k:\t_my_work\z_2h_accords_generator\midi_interface.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313150782 source:k:\t_my_work\z_2h_accords_generator\dichotic.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1309161781 source:k:\t_my_work\z_2h_accords_generator\music.cpp
+	"stdafx.h"
+
+1313149729 source:k:\t_my_work\z_2h_accords_generator\music_files.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149736 source:k:\t_my_work\z_2h_accords_generator\random.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149756 source:k:\t_my_work\z_2h_accords_generator\stdafx.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149762 source:k:\t_my_work\z_2h_accords_generator\tools.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149767 source:k:\t_my_work\z_2h_accords_generator\unicode.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149772 source:k:\t_my_work\z_2h_accords_generator\win.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149781 source:k:\t_my_work\z_2h_accords_generator\win_tools.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149787 source:k:\t_my_work\z_2h_accords_generator\winfile.cpp
+	"stdafx.h"
+	"stdafx2.h"
+
+1313149858 k:\t_my_work\z_2h_accords_generator\stdafx2.h
 	"unicode.h"
 	"tools.h"
 	"ar.h"
@@ -41,69 +119,4 @@
 	"dichotic.h"
 	"music_files.h"
 	"music.h"
-
-1309163311 k:\t_my_work\z_2h_accords_generator\unicode.h
-
-1308749329 k:\t_my_work\z_2h_accords_generator\tools.h
-
-1308136310 k:\t_my_work\z_2h_accords_generator\ar.h
-
-1307606279 k:\t_my_work\z_2h_accords_generator\random.h
-
-1308571824 k:\t_my_work\z_2h_accords_generator\files.h
-	<share.h>
-
-1308307213 k:\t_my_work\z_2h_accords_generator\winfile.h
-
-1302252863 k:\t_my_work\z_2h_accords_generator\win_kb.h
-
-1308738427 k:\t_my_work\z_2h_accords_generator\win_tools.h
-
-1301482838 k:\t_my_work\z_2h_accords_generator\midi_interface.h
-
-1308751388 k:\t_my_work\z_2h_accords_generator\amain.h
-
-1308648213 k:\t_my_work\z_2h_accords_generator\win.h
-
-1309172047 k:\t_my_work\z_2h_accords_generator\dichotic.h
-
-1308751362 k:\t_my_work\z_2h_accords_generator\music_files.h
-
-1309158099 k:\t_my_work\z_2h_accords_generator\music.h
-
-1307621983 source:k:\t_my_work\z_2h_accords_generator\files.cpp
-	"stdafx.h"
-
-1300969749 source:k:\t_my_work\z_2h_accords_generator\midi_interface.cpp
-	"stdafx.h"
-
-1309172364 source:k:\t_my_work\z_2h_accords_generator\dichotic.cpp
-	"stdafx.h"
-
-1309161781 source:k:\t_my_work\z_2h_accords_generator\music.cpp
-	"stdafx.h"
-
-1308818786 source:k:\t_my_work\z_2h_accords_generator\music_files.cpp
-	"stdafx.h"
-
-1285678760 source:k:\t_my_work\z_2h_accords_generator\random.cpp
-	"stdafx.h"
-
-1204286775 source:k:\t_my_work\z_2h_accords_generator\stdafx.cpp
-	"stdafx.h"
-
-1308748854 source:k:\t_my_work\z_2h_accords_generator\tools.cpp
-	"stdafx.h"
-
-1308571824 source:k:\t_my_work\z_2h_accords_generator\unicode.cpp
-	"stdafx.h"
-
-1301921579 source:k:\t_my_work\z_2h_accords_generator\win.cpp
-	"stdafx.h"
-
-1303980959 source:k:\t_my_work\z_2h_accords_generator\win_tools.cpp
-	"stdafx.h"
-
-1283931578 source:k:\t_my_work\z_2h_accords_generator\winfile.cpp
-	"stdafx.h"
 

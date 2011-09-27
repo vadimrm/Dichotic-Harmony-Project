@@ -1,7 +1,8 @@
 ﻿
 #include "stdafx.h"
+#include "stdafx2.h"
 
-int C_n_k(int N, int K, vector<int> &Cnk)
+int arC_n_k(int N, int K, vector<int> &Cnk)
 // выдаёт массив сочетаний из N по K, в виде N-разрядных чисел с K единичными битами
 // возвращает количество найденных сочетаний;
 // абсолютные ограничения: 1 <= K <= N <= 30
@@ -29,25 +30,51 @@ int C_n_k(int N, int K, vector<int> &Cnk)
 
 uint64 C_n_k(int n, int k)
 // возвращает число сочетаний из n по k: C = n!/k!*(n-k)! = (k+1)*(k+2)*...*n/1*2*...*(n-k)
-// эта функция ошибается уже при n = 21, k = 2
+// эта функция работает верно при n <= 62 (и любых k)
 {
   if (n <= 0 || k <= 0 || n < k) return 0;
-  int i;
+  int n_k = n-k;
+  uint64 cnk = 1;
+  bool j_ok = false; // флаг для однократного деления на каждый знаменатель
+  for (int i = k+1, j = 1; i <= n; ++i)
+  {
+    cnk *= i;
+    // после каждого умножения в числителе пытаемся разделить на максимально возможное число знаменателей
+back:
+    uint64 cnkj = cnk/j;
+    if ( cnk == (cnkj*j) ) // (cnk/j) - дробь без остатка
+    {
+      if (!j_ok) cnk = cnkj;
+      j_ok = true;
+      if (j < n_k)
+      {
+        ++j;
+        j_ok = false;
+        goto back;
+      }
+    }
+  }
+  return cnk;
+/*
+  // простой вариант функции - работает верно только при n <= 20 (и любых k)
+  if (n <= 0 || k <= 0 || n < k) return 0;
+  int i, n_k = n-k;
   uint64 verh = 1, niz = 1;
   for (i = k+1; i <= n; ++i) verh *= i;
-  for (i = 2; i <= (n-k); ++i) niz *= i;
+  for (i = 2; i <= n_k; ++i) niz *= i;
   return uint64(verh/niz);
+*/
 }
 
 uint64 fC_n_k(int n, int k)
 // возвращает число сочетаний из n по k: C = n!/k!*(n-k)! = (k+1)*(k+2)*...*n/1*2*...*(n-k)
-// вариант с плав. запятой, даёт гораздо больший рабочий диапазон!
+// вариант с плав. запятой, даёт гораздо больший рабочий диапазон, кажется не менее n=100
 {
   if (n <= 0 || k <= 0 || n < k) return 0;
-  int i;
+  int i, n_k = n-k;;
   double verh = 1., niz = 1.;
   for (i = k+1; i <= n; ++i) verh *= i;
-  for (i = 2; i <= (n-k); ++i) niz *= i;
+  for (i = 2; i <= n_k; ++i) niz *= i;
   return uint64(0.5 + verh/niz);
 }
 

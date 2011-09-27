@@ -21,13 +21,13 @@ public:
   // DirName - папка для файла, если 0 то "текущая" - из GetCurrentDirectory()
   // данные читаются в массив аккордов, max_accords макс. число аккордов в массиве,
   // а на выходе из функции в случае успеха max_accords - число прочитанных аккордов
-  bool Open(ChainHeader &ch, DichoticAccord *acc_chain, int &max_accords, const wchar_t *file=UNI_NULL_STR, const wchar_t *DirName=dflt_dir);
+  bool Open(SequenceHeader &ch, DichoticAccord *acc_sequence, int &max_accords, const wchar_t *file=UNI_NULL_STR, const wchar_t *DirName=dflt_dir);
   // вариант для PAS файлов редактора Muse
-  bool OpenPAS(int dtrans, ChainHeader &ch, DichoticAccord *acc_chain, int &max_accords, const wchar_t *file=UNI_NULL_STR, const wchar_t *DirName=L"pas");
+  bool OpenPAS(int dtrans, SequenceHeader &ch, DichoticAccord *acc_sequence, int &max_accords, const wchar_t *file=UNI_NULL_STR, const wchar_t *DirName=L"pas");
   // диалог записи аккордов в файл, подробности о mode см. описание SaveMusic()
-  bool SaveAs(ChainHeader ch, const DichoticAccord *acc_chain, int num_accords, int mode, const wchar_t *DirName=dflt_dir);
+  bool SaveAs(SequenceHeader ch, const DichoticAccord *acc_sequence, int num_accords, int mode, const wchar_t *DirName=dflt_dir);
 
-  friend void MakeAccordsStrings(ChainHeader ch, const DichoticAccord *acc_chain, int num_accords, wstring2 &s0, wstring2 &s);
+  friend void MakeAccordsStrings(SequenceHeader ch, const DichoticAccord *acc_sequence, int num_accords, wstring2 &s0, wstring2 &s);
 };
 
 #pragma pack(pop)

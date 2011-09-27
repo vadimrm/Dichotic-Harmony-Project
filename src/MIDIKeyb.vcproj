@@ -82,7 +82,7 @@
 				ProgramDatabaseFile=".\Release/MIDIKeyb.pdb"
 				SubSystem="2"
 				TargetMachine="1"
-				Profile="false"
+				Profile="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -178,6 +178,7 @@
 				ProgramDatabaseFile=".\Debug/MIDIKeyb.pdb"
 				SubSystem="2"
 				TargetMachine="1"
+				Profile="true"
 			/>
 			<Tool
 				Name="VCALinkTool"

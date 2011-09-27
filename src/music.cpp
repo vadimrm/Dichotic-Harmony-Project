@@ -1,5 +1,6 @@
 ﻿
 #include "stdafx.h"
+#include "stdafx2.h"
 
 // при старте программы:
 int midi_instrument_number = 1; // номер инструмента для всех голосов аккорда, 1 = Bright Acoustic Piano
@@ -21,10 +22,13 @@ int control_id_array[][3] =
   { IDC_Note_Voice_10, IDC_Pan_Voice_10, IDC_Switchon_Voice_10, },
   { IDC_Note_Voice_11, IDC_Pan_Voice_11, IDC_Switchon_Voice_11, },
   { IDC_Note_Voice_12, IDC_Pan_Voice_12, IDC_Switchon_Voice_12, },
+  { IDC_Note_Voice_13, IDC_Pan_Voice_13, IDC_Switchon_Voice_13, },
+  { IDC_Note_Voice_14, IDC_Pan_Voice_14, IDC_Switchon_Voice_14, },
+  { IDC_Note_Voice_15, IDC_Pan_Voice_15, IDC_Switchon_Voice_15, },
 };
 
 // массивы инициализации в каждом диалог боксе всех контролов-чекбоксов
-CheckCtrl check[][24] =
+CheckCtrl check[][23] =
 {
   // диалог бокс 0
   {
@@ -32,7 +36,7 @@ CheckCtrl check[][24] =
   { IDC_CHECK_Switchon_Left_Pan, BST_CHECKED, { UNI_NULL_STR } }, // включение левой панорамы
   { IDC_CHECK_Switchon_Mid_Pan, BST_CHECKED, { UNI_NULL_STR } },  // включение средней панорамы
   { IDC_CHECK_Switchon_Right_Pan, BST_CHECKED, { UNI_NULL_STR } },// включение правой панорамы
-  { IDC_CHECK_Loop_Chain, BST_UNCHECKED, { UNI_NULL_STR } }, // зациклить секвенцию
+  { IDC_CHECK_Loop_Sequence, BST_UNCHECKED, { UNI_NULL_STR } }, // зациклить секвенцию
 
   { IDC_CHECK_Edit_Sequence, BST_UNCHECKED, { UNI_NULL_STR } }, // разрешение редактирования текущего аккорда секвенции
   { IDC_CHECK_Save_With_Manipuls, BST_UNCHECKED, { UNI_NULL_STR } }, // учёт реал-тайм контролов при запись в файл
@@ -50,14 +54,12 @@ CheckCtrl check[][24] =
 
   // при включении чекбокса В ИНДИКАТОРАХ нот аккорда все номера нот сдвигаются до min=0
   { IDC_CHECK_Zero_Ground_Notes, BST_UNCHECKED, { L"Original Notes", L"Zero Ground Notes", UNI_NULL_STR } },
-  // исключаем все голоса-паузы из аккорда, это надо для записи в файл...
-  { IDC_CHECK_Dont_Save_Empty_Voices, BST_UNCHECKED, { UNI_NULL_STR } },
   { IDC_CHECK_Show_Sorted_Notes, BST_UNCHECKED, { UNI_NULL_STR } }, // сортируем голоса в порядке возрастания номеров нот
   // общий уровень громкости 100%, ~10%, ~1% этот контрол меняет громкость на всех диалог боксах!!
   { IDC_CHECK_Mute_Sound, BST_UNCHECKED, { L"Don't Mute", L"Mute Sound", L"Soundless" } }, // Tri-state чекбокс!
   { IDC_CHECK_Converter_Mode, BST_UNCHECKED, { UNI_NULL_STR } }, // включение режима 2H преобразования музыки
-
   { IDC_CHECK_Converter_Auto, BST_UNCHECKED, { UNI_NULL_STR } }, // автоматическое преобразование
+
   { IDC_CHECK_Converter_Mirror_Accords, BST_UNCHECKED, { UNI_NULL_STR } }, // оставлять зеркальные аккорды
   { IDC_CHECK_Converter_With_Unisons,   BST_UNCHECKED, { UNI_NULL_STR } }, // оставлять аккорды с унисонами
   { IDC_CHECK_No_Sound, BST_UNCHECKED, { UNI_NULL_STR } }, // если выбран, то кнопка Generate Accord делает всё кроме звука
@@ -66,34 +68,37 @@ CheckCtrl check[][24] =
   {
   check[0][ 0],check[0][ 1],check[0][ 2],check[0][ 3],check[0][ 4],check[0][ 5],check[0][ 6],check[0][ 7],check[0][ 8],check[0][ 9],
   check[0][10],check[0][11],check[0][12],check[0][13],check[0][14],check[0][15],check[0][16],check[0][17],check[0][18],check[0][19],
-  check[0][20],check[0][21],check[0][22],check[0][23],
+  check[0][20],check[0][21],check[0][22],
   },
   // то же самое для диалогбокса 2
   {
   check[0][ 0],check[0][ 1],check[0][ 2],check[0][ 3],check[0][ 4],check[0][ 5],check[0][ 6],check[0][ 7],check[0][ 8],check[0][ 9],
   check[0][10],check[0][11],check[0][12],check[0][13],check[0][14],check[0][15],check[0][16],check[0][17],check[0][18],check[0][19],
-  check[0][20],check[0][21],check[0][22],check[0][23],
+  check[0][20],check[0][21],check[0][22],
   }
 };
 
-ButtonCtrl button[][3] =
+ButtonCtrl button[][6] =
 {
   {
-  { IDC_Play_Stop, L"Play Chain", L"Stop Chain", 0, 0 }, // кнопка Play/Stop
+  { IDC_Play_Stop, L"Play Seq", L"Stop Seq", 0, 0 }, // кнопка Play/Stop
   { IDC_Rewind, L"Rewind", UNI_NULL_STR, 0, 0 },         // кнопка Rewind
-  { IDC_Save_Accords_Chain, L"Save Accords Chain", UNI_NULL_STR, 0, 0 }, // кнопка Save Accords Chain
+  { IDC_Save_Accords_Sequence, L"Save Accords Sequence", UNI_NULL_STR, 0, 0 }, // кнопка Save Accords Sequence
+  { IDC_Make_Voices_Combinations, UNI_NULL_STR, UNI_NULL_STR, 0, 1 }, // кнопка генерации секвенции сочетаний голосов
+  { IDC_Press_Sequence, L"Press Seq Accs", UNI_NULL_STR, 0, 0 }, // сжатие секвенции путём удаления голосов-пауз из аккордов
+  { IDC_Sort_Sequence, L"Sort Seq Diss", UNI_NULL_STR, 0, 0 }, // сортировка аккордов секвенции - по диссонансам
   },
-  { button[0][0], button[0][1], button[0][2], },
-  { button[0][0], button[0][1], button[0][2], },
+  { button[0][0], button[0][1], button[0][2], button[0][3], button[0][4], button[0][5], },
+  { button[0][0], button[0][1], button[0][2], button[0][3], button[0][4], button[0][5], },
 };
 
 TextSliderCtrl::Members slider[][8] =
 {
   {
   // номер аккорда, индикатор-регулятор при проигрывании секвенции аккордов
-  { 1, 1, 1, 10, IDC_SLIDER_Accord_Number, IDC_STATIC_Accord_Number, L"Accord ", 1, 1, 1 },
+  { 1, 1, 1, 10, IDC_SLIDER_Accord_Number, IDC_STATIC_Accord_Number, L"ACC ", 1, 1, 1 },
   // скорость проигрывания секвенции 0.1...10
-  { 1, 100, 1, 10, IDC_SLIDER_Chain_Speed, IDC_STATIC_Chain_Speed, L"Chain Speed  ", 10, 0.1, 0 },
+  { 1, 100, 1, 10, IDC_SLIDER_Sequence_Speed, IDC_STATIC_Sequence_Speed, L"Seq Speed  ", 10, 0.1, 0 },
   // скорость нажатия миди ноты
   { 1, 127, 1, 10, IDC_SLIDER_Accord_Volume, IDC_STATIC_Accord_Volume, L"Volume    ", 100, 1, 0 },
   // параметр транспозиции: это абсолютный миди номер ноты с относительным номером 0
@@ -128,10 +133,19 @@ ComboBoxCtrl combo[][2] =
 EditCtrl edit[][1] =
 {
   {
-  { IDC_EDIT_Accords_Chain_Comment, 1, 1 }, // строка комментария к секвенции аккордов
+  { IDC_EDIT_Accords_Sequence_Comment, 1, 1 }, // строка комментария к секвенции аккордов
   },
   { edit[0][0] },
   { edit[0][0] },
+};
+
+SpinEditCtrl spin[][1] = // спин в едитбоксе
+{
+  { // максимум спина равен макс. числу голосов бокса 0
+  { IDC_SPIN_Voices_Combinations, 0, 1, DIALOG_VOICES[0], 1, IDC_EDIT_Voices_Combinations, 1 }, // 1 = read-only edit
+  },
+  { spin[0][0] },
+  { spin[0][0] },
 };
 
 TextCtrl textctrl[][5] =
@@ -154,7 +168,7 @@ int MusicDialogBoxCtrl::diss_rating[MAX_INTERVAL];
 inline double MusicDialogBoxCtrl::AccordDtime()
 {
   return sliders[Accord_Duration].actpos /
-       ( sliders[Chain_Speed].get_reg_value() * (double)sliders[Accord_Temp].actpos );
+       ( sliders[Sequence_Speed].get_reg_value() * (double)sliders[Accord_Temp].actpos );
 }
 
 void MusicDialogBoxCtrl::LoadData()
@@ -198,16 +212,16 @@ void MusicDialogBoxCtrl::SortSimilarAccordsMono()
 // совпадения с ним (количество совпадающих нот в монофоническом варианте), без записи в файл!
 // все аккорды должны быть N-голосными (N = const, N >= 2) и не должны иметь голоса-паузы...
 {
-  if (accords_in_chain < 2) return;
-  int voices = accords_chain[0].voices_number;
+  if (accords_in_sequence < 2) return;
+  int voices = accords_sequence[0].voices_number;
   if (voices < 2) return;
 
-  DichoticAccord *accords1 = accords_chain;
-  Ar <DichoticAccord> accords2(accords_in_chain);
+  DichoticAccord *accords1 = accords_sequence;
+  Ar <DichoticAccord> accords2(accords_in_sequence);
 
   int n, m;
   // копируем исходную секвенцию аккордов во 2-ю с сортировкой
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
     accords2[n] = accords1[n];
     // сортируем голоса аккорда по возрастанию нот
@@ -217,7 +231,7 @@ void MusicDialogBoxCtrl::SortSimilarAccordsMono()
   // копируем "опорный аккорд" с индексом accord_act_index = Accord_Number.actpos-1
   DichoticAccord main_acc = accords2[accord_act_index];
   // определяем "отличие" (сумма модулей разности нот) каждого аккорда от опорного
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
     int sum = 0;
     for (m = 0; m < voices; ++m) sum += abs(main_acc.dn[m].note - accords2[n].dn[m].note);
@@ -226,7 +240,7 @@ void MusicDialogBoxCtrl::SortSimilarAccordsMono()
   }
 
   // сортируем исходную секвенцию по возрастанию отличий аккордов от опорного
-  qsort(accords1, accords_in_chain, sizeof(DichoticAccord), DichoticAccord::CmpAcc2);
+  qsort(accords1, accords_in_sequence, sizeof(DichoticAccord), DichoticAccord::CmpAcc2);
 
   // меняем индекс текущего аккорда на 0-й, в котором теперь находится опорный аккорд
   accord_act_index = 0;
@@ -238,17 +252,17 @@ void MusicDialogBoxCtrl::SortSimilarAccords3and3()
 // половинкам 6-голосных аккордов:
 // сравнивает ноты голосов 0-2 и 3-5, выбирая суммарно-минимально отличные комбинации половинок!
 {
-  if (accords_in_chain < 2) return;
-  int voices = accords_chain[0].voices_number;
+  if (accords_in_sequence < 2) return;
+  int voices = accords_sequence[0].voices_number;
   if (voices != 6) return;
   int voices2 = voices/2; // 3 голоса в половинке аккорда
 
-  DichoticAccord *accords1 = accords_chain;
-  Ar <DichoticAccord> accords2(accords_in_chain);
+  DichoticAccord *accords1 = accords_sequence;
+  Ar <DichoticAccord> accords2(accords_in_sequence);
 
   int n, m;
   // копируем исходную секвенцию аккордов во 2-ю с сортировкой
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
     accords2[n] = accords1[n];
     // сортируем половинки аккорда по возрастанию нот
@@ -263,7 +277,7 @@ void MusicDialogBoxCtrl::SortSimilarAccords3and3()
   for (m = 0; m < voices2; ++m) swap( main_acc2.dn[m].note, main_acc2.dn[voices2+m].note );
 
   // определяем "отличие" (сумма модулей разности нот) каждого аккорда от опорного
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
     // суммарное отличие от каждого варианта опорного аккорда
     int sum1 = 0, sum2 = 0;
@@ -277,7 +291,7 @@ void MusicDialogBoxCtrl::SortSimilarAccords3and3()
   }
 
   // сортируем исходную секвенцию по возрастанию отличий аккордов от опорного
-  qsort(accords1, accords_in_chain, sizeof(DichoticAccord), DichoticAccord::CmpAcc2);
+  qsort(accords1, accords_in_sequence, sizeof(DichoticAccord), DichoticAccord::CmpAcc2);
 
   // меняем индекс текущего аккорда на 0-й, в котором теперь находится опорный аккорд
   accord_act_index = 0;
@@ -287,16 +301,16 @@ void MusicDialogBoxCtrl::SortSimilarAccords3and3()
 void MusicDialogBoxCtrl::AddInversePanAccords()
 // добавляет после каждого аккорда точно такой же, но с инверсной панорамой!
 {
-  if (accords_in_chain < 1 || accords_in_chain > MAX_ACCORDS/2) return;
-  DichoticAccord *accords1 = accords_chain;
-  Ar <DichoticAccord> accords2(accords_in_chain);
+  if (accords_in_sequence < 1 || accords_in_sequence > MAX_ACCORDS/2) return;
+  DichoticAccord *accords1 = accords_sequence;
+  Ar <DichoticAccord> accords2(accords_in_sequence);
 
   int n, m;
   // копируем исходную секвенцию аккордов во 2-ю
-  for (n = 0; n < accords_in_chain; ++n) accords2[n] = accords1[n];
+  for (n = 0; n < accords_in_sequence; ++n) accords2[n] = accords1[n];
 
   // копируем обратно в исходную секвенцию с удвоением каждого аккорда
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
     accords1[2*n] = accords1[2*n+1] = accords2[n];
     int voices = accords2[n].voices_number;
@@ -307,8 +321,8 @@ void MusicDialogBoxCtrl::AddInversePanAccords()
   }
 
   // удваиваем число аккордов и предел регулятора номера аккорда
-  accords_in_chain = 2*accords_in_chain;
-  sliders[Accord_Number].reset_minmax(1, accords_in_chain);
+  accords_in_sequence = 2*accords_in_sequence;
+  sliders[Accord_Number].reset_minmax(1, accords_in_sequence);
 }
 
 void MusicDialogBoxCtrl::DeleteIdenticAccords6()
@@ -318,9 +332,9 @@ void MusicDialogBoxCtrl::DeleteIdenticAccords6()
   int n, m;
 
   // переставляем голоса в 1-й и 2-й тройке голосов по возрастанию номеров нот
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
-    DichoticAccord &acc = accords_chain[n];
+    DichoticAccord &acc = accords_sequence[n];
     if (acc.voices_number == 6)
     {
       DichoticAccord::Sort3notes(acc, 0); // сортируем ноты голосов 0,1,2
@@ -349,34 +363,34 @@ void MusicDialogBoxCtrl::DeleteIdenticAccords6()
   }
 
   // уничтожаем совпадающие аккорды - делаем из них паузы
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
-    DichoticAccord &acc1 = accords_chain[n];
+    DichoticAccord &acc1 = accords_sequence[n];
     if (acc1.voices_number != 6) continue;
-    for (m = n+1; m < accords_in_chain; ++m)
+    for (m = n+1; m < accords_in_sequence; ++m)
     {
-      DichoticAccord &acc2 = accords_chain[m];
+      DichoticAccord &acc2 = accords_sequence[m];
       if (acc2.voices_number != 6) continue;
       if ( acc1.dn[0].note == acc2.dn[0].note &&
            acc1.dn[1].note == acc2.dn[1].note &&
            acc1.dn[2].note == acc2.dn[2].note &&
            acc1.dn[3].note == acc2.dn[3].note &&
            acc1.dn[4].note == acc2.dn[4].note &&
-           acc1.dn[5].note == acc2.dn[5].note ) acc2.voices_number = 0;
+           acc1.dn[5].note == acc2.dn[5].note ) acc2.make_pause();
     }
   }
 
   // уничтожаем паузы, сдвигая аккорды к началу секвенции
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
-    DichoticAccord &acc1 = accords_chain[n];
-    if (acc1.voices_number == 0) // найдена пауза
+    DichoticAccord &acc1 = accords_sequence[n];
+    if ( acc1.is_pause() ) // найдена пауза
     {
       // ищем аккорд (не паузу), ставим его на место паузы
-      for (m = n+1; m < accords_in_chain; ++m)
+      for (m = n+1; m < accords_in_sequence; ++m)
       {
-        DichoticAccord &acc2 = accords_chain[m];
-        if (acc2.voices_number != 0)
+        DichoticAccord &acc2 = accords_sequence[m];
+        if ( !acc2.is_pause() )
         {
           swap(acc1, acc2);
           break;
@@ -387,13 +401,13 @@ void MusicDialogBoxCtrl::DeleteIdenticAccords6()
 
   // определяем и уменьшаем число аккордов в цепочке на число пауз
   int npause = 0; // количество пауз в секвенции
-  for (n = 0; n < accords_in_chain; ++n) if ( accords_chain[n].voices_number == 0 ) ++npause;
-  accords_in_chain -= npause;
+  for (n = 0; n < accords_in_sequence; ++n) if ( accords_sequence[n].is_pause() ) ++npause;
+  accords_in_sequence -= npause;
 
   // сортируем секвенцию по возрастанию номеров нот, 1-й голос старший, 2-й следующий и т.д.
-  if (accords_in_chain > 0)
+  if (accords_in_sequence > 0)
   {
-    qsort( accords_chain.memory(), accords_in_chain, sizeof(DichoticAccord), DichoticAccord::CmpAcc );
+    qsort( accords_sequence.memory(), accords_in_sequence, sizeof(DichoticAccord), DichoticAccord::CmpAcc );
     // записываем отсортированную секвенцию без дополнительных изменений в файл
     SaveMusic(3);
   }
@@ -407,9 +421,9 @@ void MusicDialogBoxCtrl::DeleteIdenticAccords4()
   int n, m;
 
   // если число голосов равно 5, то средний голос отбрасывается
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
-    DichoticAccord &acc = accords_chain[n];
+    DichoticAccord &acc = accords_sequence[n];
     if (acc.voices_number == 5)
     {
       // голос acc.dn[2] считается паузой, голоса [3] и [4] сдвигаются вниз!
@@ -420,9 +434,9 @@ void MusicDialogBoxCtrl::DeleteIdenticAccords4()
   }
 
   // переставляем голоса в 1-й и 2-й паре голосов по возрастанию номеров нот
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
-    DichoticAccord &acc = accords_chain[n];
+    DichoticAccord &acc = accords_sequence[n];
     if (acc.voices_number == 4)
     {
       DichoticAccord::Sort2notes(acc, 0); // сортируем ноты голосов 0,1
@@ -445,32 +459,32 @@ void MusicDialogBoxCtrl::DeleteIdenticAccords4()
   }
 
   // уничтожаем совпадающие аккорды - делаем из них паузы
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
-    DichoticAccord &acc1 = accords_chain[n];
+    DichoticAccord &acc1 = accords_sequence[n];
     if (acc1.voices_number != 4) continue;
-    for (m = n+1; m < accords_in_chain; ++m)
+    for (m = n+1; m < accords_in_sequence; ++m)
     {
-      DichoticAccord &acc2 = accords_chain[m];
+      DichoticAccord &acc2 = accords_sequence[m];
       if (acc2.voices_number != 4) continue;
       if ( acc1.dn[0].note == acc2.dn[0].note &&
            acc1.dn[1].note == acc2.dn[1].note &&
            acc1.dn[2].note == acc2.dn[2].note &&
-           acc1.dn[3].note == acc2.dn[3].note ) acc2.voices_number = 0;
+           acc1.dn[3].note == acc2.dn[3].note ) acc2.make_pause();
     }
   }
 
   // уничтожаем паузы, сдвигая аккорды к началу секвенции
-  for (n = 0; n < accords_in_chain; ++n)
+  for (n = 0; n < accords_in_sequence; ++n)
   {
-    DichoticAccord &acc1 = accords_chain[n];
-    if (acc1.voices_number == 0) // найдена пауза
+    DichoticAccord &acc1 = accords_sequence[n];
+    if ( acc1.is_pause() ) // найдена пауза
     {
       // ищем аккорд (не паузу), ставим его на место паузы
-      for (m = n+1; m < accords_in_chain; ++m)
+      for (m = n+1; m < accords_in_sequence; ++m)
       {
-        DichoticAccord &acc2 = accords_chain[m];
-        if (acc2.voices_number != 0)
+        DichoticAccord &acc2 = accords_sequence[m];
+        if ( !acc2.is_pause() )
         {
           swap(acc1, acc2);
           break;
@@ -481,13 +495,13 @@ void MusicDialogBoxCtrl::DeleteIdenticAccords4()
 
   // определяем и уменьшаем число аккордов в цепочке на число пауз
   int npause = 0; // количество пауз в секвенции
-  for (n = 0; n < accords_in_chain; ++n) if ( accords_chain[n].voices_number == 0 ) ++npause;
-  accords_in_chain -= npause;
+  for (n = 0; n < accords_in_sequence; ++n) if ( accords_sequence[n].is_pause() ) ++npause;
+  accords_in_sequence -= npause;
 
   // сортируем секвенцию по возрастанию номеров нот, 1-й голос старший, 2-й следующий и т.д.
-  if (accords_in_chain > 0)
+  if (accords_in_sequence > 0)
   {
-    qsort( accords_chain.memory(), accords_in_chain, sizeof(DichoticAccord), DichoticAccord::CmpAcc );
+    qsort( accords_sequence.memory(), accords_in_sequence, sizeof(DichoticAccord), DichoticAccord::CmpAcc );
     // записываем отсортированную секвенцию без дополнительных изменений в файл
     SaveMusic(3);
   }
@@ -528,12 +542,12 @@ DichoticAccord MusicDialogBoxCtrl::GetAccord()
   return acc;
 }
 
-ChainHeader MusicDialogBoxCtrl::ChainHeaderFromControls()
-// считываем контролы общих параметров, возвращаем их в виде ChainHeader
+SequenceHeader MusicDialogBoxCtrl::SequenceHeaderFromControls()
+// считываем контролы общих параметров, возвращаем их в виде SequenceHeader
 {
-  ChainHeader ch;
+  SequenceHeader ch;
   ch.transposition = sliders[Transposition].actpos;
-  ch.chain_speed = sliders[Chain_Speed].get_reg_value();
+  ch.sequence_speed = sliders[Sequence_Speed].get_reg_value();
   ch.dont_change_gm_instrument = checks[Dont_Change_GM_Instr].checked_state();
   ch.instrument_number = combos[GM_Instrument].GetStringIndex();
   return ch;
@@ -542,15 +556,15 @@ ChainHeader MusicDialogBoxCtrl::ChainHeaderFromControls()
 void MusicDialogBoxCtrl::SaveMusic(int mode)
 // при mode=0 (Save_Accord       ) записываем текущий аккорд в файл, если файл есть - стираем и перезаписываем его
 // при      1 (Append_Accord     ) добавляем аккорд к сушествующему файлу, а если файла нет - пишем его с нуля!
-// при      2 (Save_Accords_Chain) записываем секвенцию аккордов в файл, если файл есть - стираем и перезаписываем его
+// при      2 (Save_Accords_Sequence) записываем секвенцию аккордов в файл, если файл есть - стираем и перезаписываем его
 // при      3 (запись секвенции после сортировки) то же что и при 2, кроме замены текущего аккорда!
 // при (2) сначала текущий звучащий аккорд копируется в текущее место секвенции, т.о. возможно её редактирование!
 // при (0,1,3) секвенцию не меняем!
 // если чекбокс Edit_Sequence не выбран - секвенцию не меняем и при mode=2!
 {
   // создаем данные текущего аккорда из контролов
-  ChainHeader ch = ChainHeaderFromControls(); // считываем контролы общих параметров
-  // Accords_Chain_Comment добавляется в MakeAccordsStrings()
+  SequenceHeader ch = SequenceHeaderFromControls(); // считываем контролы общих параметров
+  // Accords_Sequence_Comment добавляется в MakeAccordsStrings()
   DichoticAccord acc = GetAccord(); // считываем контролы голосов, формируем аккорд (до манипуляторов)
   // манипуляторы обрабатываются в SaveAs(), т.к. при записи секвенции аккордов много!
 
@@ -564,23 +578,23 @@ void MusicDialogBoxCtrl::SaveMusic(int mode)
   else // mode = 2 или 3
   {
     // секвенция должна существовать, проигрывание должно быть остановлено
-    if (accords_in_chain == 0 || play_accords_chain != 0) return;
+    if (accords_in_sequence == 0 || play_accords_sequence != 0) return;
 
     if ( mode == 2 && checks[Edit_Sequence].checked_state() ) // меняем текущий аккорд в секвенции!
     {
       // индекс редактируемого аккорда должен быть в пределах секвенции
-      if ( !in_range(0, accord_act_index, accords_in_chain-1) ) return;
+      if ( !in_range(0, accord_act_index, accords_in_sequence-1) ) return;
 
       // если будем игнорировать инструменты из аккордов - не меняем инструмент текущего аккорда в секвенции
-      if (ch.dont_change_gm_instrument) acc.instrument = accords_chain[accord_act_index].instrument;
+      if (ch.dont_change_gm_instrument) acc.instrument = accords_sequence[accord_act_index].instrument;
 
       // копируем аккорд в секвенцию, без изменения исходного комментария старого аккорда секвенции!
-      accords_chain[accord_act_index].copy_wo_comment( acc );
+      accords_sequence[accord_act_index].copy_wo_comment( acc );
     }
     // else не меняем секвенцию!
 
     // записываем секвенцию аккордов в новый файл
-    mfile.SaveAs(ch, accords_chain, accords_in_chain, mode);
+    mfile.SaveAs(ch, accords_sequence, accords_in_sequence, mode);
   }
 }
 
@@ -596,11 +610,11 @@ void MusicDialogBoxCtrl::ResetMaxDuration()
 
 void MusicDialogBoxCtrl::TimerMessage()
 {
-  static Times chain_time(Times::mid); // датчик времени секвенции с точностью 1 мсек
+  static Times sequence_time(Times::mid); // датчик времени секвенции с точностью 1 мсек
   static double acc_dtime = 0; // длительность проигрываемого аккорда, сек
 
   // запускаем секвенцер аккордов
-  if (play_accords_chain == 1)
+  if (play_accords_sequence == 1)
   {
     // если аккорд звучал (из-за других причин) - отключаем аккорд
     MaybeGenerateAccord(3);
@@ -611,32 +625,32 @@ void MusicDialogBoxCtrl::TimerMessage()
     // включаем аккорд
     MaybeGenerateAccord(1);
     // сбрасываем датчик времени на текущий момент
-    chain_time.reset();
-    play_accords_chain = 2;
+    sequence_time.reset();
+    play_accords_sequence = 2;
   }
   else
-  if (play_accords_chain == 2) // продолжение генерации
+  if (play_accords_sequence == 2) // продолжение генерации
   {
     // ожидание конца аккорда и переход к следующему
-    if (chain_time.dt() >= acc_dtime)
+    if (sequence_time.dt() >= acc_dtime)
     {
       // откл. аккорда
       MaybeGenerateAccord(3);
       // переход к следующему аккорду, если был не последний
-      if (++accord_act_index < accords_in_chain)
+      if (++accord_act_index < accords_in_sequence)
       {
         SetupAccord(accord_act_index);
         acc_dtime = AccordDtime();
         MaybeGenerateAccord(1); // вкл. аккорда
-        chain_time.reset();
+        sequence_time.reset();
       }
       else // кончился последний аккорд в секвенции
       {
         // отрабатываем зацикливание секвенции
-        if ( checks[Loop_Chain].checked_state() ) play_accords_chain = 0;
+        if ( checks[Loop_Sequence].checked_state() ) play_accords_sequence = 0;
         RewindAccords(); // перематываем в начало
-        // при play_accords_chain = 2 останавливаем проигрывание
-        // при play_accords_chain = 0 перезапускаем проигрывание
+        // при play_accords_sequence = 2 останавливаем проигрывание
+        // при play_accords_sequence = 0 перезапускаем проигрывание
         Play_StopAccords();
       }
     }
@@ -670,7 +684,7 @@ void MusicDialogBoxCtrl::RegenAccord()
 void MusicDialogBoxCtrl::RewindAccords()
 {
   // если шло проигрывание - его надо остановить и начать заново
-  int play = play_accords_chain;
+  int play = play_accords_sequence;
   if (play == 2) Play_StopAccords();
 
   accord_act_index = 0;
@@ -683,22 +697,22 @@ void MusicDialogBoxCtrl::Play_StopAccords()
 // включаем проигрывание секвенции если оно остановлено или останавливаем если включено;
 {
   // проверяем флаг проигрывания секвенции: 0=стоп, 1=старт, 2=продолжение проигрывания
-  if (play_accords_chain == 0)
-    play_accords_chain = 1;
-  else // play_accords_chain = 1 или 2
-    play_accords_chain = 0;
+  if (play_accords_sequence == 0)
+    play_accords_sequence = 1;
+  else // play_accords_sequence = 1 или 2
+    play_accords_sequence = 0;
 
-  buttons[Play_Stop].button_text(play_accords_chain==0? 0:1);
+  buttons[Play_Stop].button_text(play_accords_sequence==0? 0:1);
 
   // идентификатор таймера важен только если у одного диалог бокса есть более одного таймера!
   int id = 1;
-  if (play_accords_chain == 1)
+  if (play_accords_sequence == 1)
   {
     // диалог бокс определяется по hwnd()
     SetTimer( hwnd(), id, timer_msec, 0);
   }
   else
-  if (play_accords_chain == 0)
+  if (play_accords_sequence == 0)
   {
     KillTimer( hwnd(), id );
     // откл. аккорда
@@ -711,10 +725,10 @@ void MusicDialogBoxCtrl::GenerateAccord()
   if (gen_state == 1) // включаем аккорд
   {
     // считываем все контролы, формируем аккорд (до манипуляторов)
-    DichoticAccord src_acc = GetAccord();
+    gen_acc = GetAccord();
 
-    // пропускаем исходный аккорд через общие манипуляторы, получаем текущий аккорд
-    gen_acc = DichoticAccord::accord_manipulator( src_acc );
+    // пропускаем аккорд через общие манипуляторы, получаем текущий аккорд
+    gen_acc.accord_manipulator();
 
     // включаем ноты аккорда
     for (int i = 0; i < gen_acc.voices_number; ++i)
@@ -770,11 +784,11 @@ void MusicDialogBoxCtrl::SetupAccord(int index)
   // номер аккорда в индикторе на 1 больше индекса
   sliders[Accord_Number].setpos(index+1);
 
-  DichoticAccord acc = accords_chain[index];
+  DichoticAccord acc = accords_sequence[index];
 
   if ( checks[Dont_Change_GM_Instr].unchecked_state() &&
        combos[GM_Instrument].GetStringIndex() != acc.instrument &&
-       acc.voices_number > 0 ) // при паузе номер инструмента не меняется!
+       !acc.is_pause() ) // при паузе номер инструмента не меняется!
   {
     SetInstrument(acc.instrument);
   }
@@ -936,6 +950,7 @@ void CALLBACK MusicDialogBoxCtrl::InitDialog(int dnum)
     InitControls(slider[dnum]);
     InitControls(combo[dnum]);
     InitControls(edit[dnum]);
+    InitControls(spin[dnum]);
     InitControls(textctrl[dnum]);
 
     // заполняем список midi девайсов, открываем девайс
@@ -945,21 +960,22 @@ void CALLBACK MusicDialogBoxCtrl::InitDialog(int dnum)
 
     // загреиваем это пока не загружен аккорд или секвенция
     sliders[Accord_Number].enable(0);
-    sliders[Chain_Speed].enable(0);
-    checks[Loop_Chain].enable(0);
+    sliders[Sequence_Speed].enable(0);
+    checks[Loop_Sequence].enable(0);
     checks[Dont_Change_GM_Instr].enable(0);
     checks[Converter_Auto].enable(0);
 
     ResetMaxDuration(); // устанавливаем предел слайдера Duration
 
     // сетап голосов - в самом конце!
-    // InitDichoticVoices( control_id_array ); // число видимых голосов = числу контролов = 15
     InitDichoticVoices( control_id_array, DIALOG_VOICES[0] ); // в боксе 0 видимы и работают только 12 голосов
 
     // включаем три первых голоса и делаем 2H аккорд до-мажор
     dvoices[0].switchon_note(0,-1);
     dvoices[1].switchon_note(4);
     dvoices[2].switchon_note(7, 1);
+
+    MakeVoicesCombinations(); // выводим число сочетаний голосов
   }
   else
   if (dnum >= 1) // диалог боксы 1, 2 ...
@@ -974,6 +990,7 @@ void CALLBACK MusicDialogBoxCtrl::InitDialog(int dnum)
     InitControls(slider[dnum]);
     InitControls(combo[dnum]);
     InitControls(edit[dnum]);
+//  InitControls(spin[dnum]); // спины в ext-боксах отсутствуют!
     InitControls(textctrl[dnum]);
 
     // заполняем список midi инструментов, установим нужный инструмент во всех каналах
@@ -981,15 +998,15 @@ void CALLBACK MusicDialogBoxCtrl::InitDialog(int dnum)
 
     // загреиваем это пока не загружен аккорд или секвенция
     sliders[Accord_Number].enable(0);
-    sliders[Chain_Speed].enable(0);
-    checks[Loop_Chain].enable(0);
+    sliders[Sequence_Speed].enable(0);
+    checks[Loop_Sequence].enable(0);
     checks[Dont_Change_GM_Instr].enable(0);
 
     // в диалог боксе 1 некоторые контролы используются "в тёмную"
     ResetMaxDuration();
 
     // сетап голосов - в самом конце!
-    InitDichoticVoices( control_id_array, DIALOG_VOICES[1] ); // в боксе >=1 видимы и работают только 6 голосов
+    InitDichoticVoices( control_id_array, DIALOG_VOICES[dnum] ); // в боксе >=1 видимы и работают только 6 голосов
 /*
     // включаем три первых голоса и делаем аккорд до-минор
     dvoices[0].switchon_note(0);
@@ -1076,8 +1093,8 @@ int MusicDialogBoxCtrl::CommonDialogProc(UINT message, WPARAM wparam, LPARAM lpa
                actbox().dvoices[i].get_switchon() ) regen = 1;
         }
 
-        pos = actbox().sliders[Chain_Speed].actpos;
-        if (pos != actbox().sliders[Chain_Speed].getpos()) regen = 1;
+        pos = actbox().sliders[Sequence_Speed].actpos;
+        if (pos != actbox().sliders[Sequence_Speed].getpos()) regen = 1;
 
         pos = actbox().sliders[Accord_Volume].actpos;
         if (pos != actbox().sliders[Accord_Volume].getpos()) regen = 1;
@@ -1144,10 +1161,22 @@ int MusicDialogBoxCtrl::CommonDialogProc(UINT message, WPARAM wparam, LPARAM lpa
           else                                              actbox().SortSimilarAccords3and3();
           break;
 
-        // кнопки файловых операций и проигрывания секвенции:
+        case IDC_EDIT_Voices_Combinations: // изменение спина в "редакторе"
+          // определяем число сочетаний голосов и выводим на кнопке Make_Voices_Combinations
+          if (control_msg == EN_CHANGE) dbox[0].MakeVoicesCombinations();
+          break;
+
+        case IDC_SPIN_Voices_Combinations: // изменение спина кнопками-стрелками
+          if (control_msg == UDN_DELTAPOS) dbox[0].MakeVoicesCombinations();
+          break;
+
+        // кнопка генерации секвенции сочетаний голосов
+        case IDC_Make_Voices_Combinations: dbox[0].MakeVoicesCombinations(true); break;
+
+        // кнопки файловых операций
         case IDC_Save_Accord:        actbox().SaveMusic(0); break;
         case IDC_Append_Accord:      actbox().SaveMusic(1); break;
-        case IDC_Save_Accords_Chain: actbox().SaveMusic(2); break;
+        case IDC_Save_Accords_Sequence: actbox().SaveMusic(2); break;
         case IDC_Load_Accords:
           if ( actbox().LoadAccords(0) ) // если файл секвенции загрузился
           {
@@ -1155,17 +1184,22 @@ int MusicDialogBoxCtrl::CommonDialogProc(UINT message, WPARAM wparam, LPARAM lpa
             actbox().RegenAccord();
             // возможно делаем 2H конвертацию, затем перенажимаем аккорд в dbox[1]
             dbox[0].ConverterModeMain(true);
+            dbox[0].MakeVoicesCombinations(); // выводим число сочетаний голосов
           }
           break;
 
+        // кнопки проигрывания секвенции
         case IDC_Play_Stop: actbox().Play_StopAccords(); break;
         case IDC_Rewind:    actbox().RewindAccords(); break;
+        // кнопки сжатия и сортировки секвенции
+        case IDC_Press_Sequence: actbox().PressSequenceAccords(); break;
+        case IDC_Sort_Sequence:  actbox().SortSequenceDiss(); break;
 
         case IDC_All_Voices_Switch: actbox().AllVoicesSwitch(); actbox().RegenAccord(); break; // кнопка включателей всех голосов
         case IDC_All_Pan_Switch: if ( actbox().AllPanSwitch() ) actbox().RegenAccord(); break; // кнопка для всех панорам
 
         // кнопки синхронного сдвига +-1 и сброса в 0 высот троек голосов 1-3, 4-6, 7-9, 10-12, 13-15
-        case IDC_V1V15_0: if ( actbox().VoicesGroup(0, 15, 0) ) actbox().RegenAccord(); break;
+        case IDC_ALL_NOTES_0: if ( actbox().VoicesGroup(0, 15, 0) ) actbox().RegenAccord(); break;
 
         case IDC_V1V3_INC: if ( actbox().VoicesGroup(0, 3, +1) ) actbox().RegenAccord(); break;
         case IDC_V1V3_0:   if ( actbox().VoicesGroup(0, 3,  0) ) actbox().RegenAccord(); break;
@@ -1182,6 +1216,10 @@ int MusicDialogBoxCtrl::CommonDialogProc(UINT message, WPARAM wparam, LPARAM lpa
         case IDC_V10V12_INC: if ( actbox().VoicesGroup(9, 3, +1) ) actbox().RegenAccord(); break;
         case IDC_V10V12_0:   if ( actbox().VoicesGroup(9, 3,  0) ) actbox().RegenAccord(); break;
         case IDC_V10V12_DEC: if ( actbox().VoicesGroup(9, 3, -1) ) actbox().RegenAccord(); break;
+
+        case IDC_V13V15_INC: if ( actbox().VoicesGroup(12, 3, +1) ) actbox().RegenAccord(); break;
+        case IDC_V13V15_0:   if ( actbox().VoicesGroup(12, 3,  0) ) actbox().RegenAccord(); break;
+        case IDC_V13V15_DEC: if ( actbox().VoicesGroup(12, 3, -1) ) actbox().RegenAccord(); break;
 
         case IDC_MidiOutDevice: // действие со списком устройств
           if (control_msg == CBN_SELENDOK) // завершен выбор из списка устройств (см также CBN_SELCHANGE)
@@ -1220,7 +1258,7 @@ int MusicDialogBoxCtrl::CommonDialogProc(UINT message, WPARAM wparam, LPARAM lpa
 
         case IDC_CHECK_Edit_Comment:
           actbox().checks[Edit_Comment].getstate();
-          actbox().edits[Accords_Chain_Comment].readonly( actbox().checks[Edit_Comment].unchecked_state() );
+          actbox().edits[Accords_Sequence_Comment].readonly( actbox().checks[Edit_Comment].unchecked_state() );
           break;
 
         case IDC_CHECK_Big_Duration: actbox().ResetMaxDuration(); break;
@@ -1230,11 +1268,13 @@ int MusicDialogBoxCtrl::CommonDialogProc(UINT message, WPARAM wparam, LPARAM lpa
         case IDC_Switchon_Voice_4:  case IDC_Switchon_Voice_5:  case IDC_Switchon_Voice_6:
         case IDC_Switchon_Voice_7:  case IDC_Switchon_Voice_8:  case IDC_Switchon_Voice_9:
         case IDC_Switchon_Voice_10: case IDC_Switchon_Voice_11: case IDC_Switchon_Voice_12:
+        case IDC_Switchon_Voice_13: case IDC_Switchon_Voice_14: case IDC_Switchon_Voice_15:
           index = actbox().voice_index(control_id); // получаем индекс голоса по Switchon_Voice.id
           if (index >= 0) // ok
           {
             actbox().dvoices[index].get_switchon_reg(); // апдейтим изменения
             actbox().RegenAccord(); // всегда перенажимаем аккорд, т.к. какой-то голос переключился
+            dbox[0].MakeVoicesCombinations(); // выводим число сочетаний голосов
           }
           // else index < 0 значит что такого контрола нет!
           break;
@@ -1252,11 +1292,10 @@ int MusicDialogBoxCtrl::CommonDialogProc(UINT message, WPARAM wparam, LPARAM lpa
         case IDC_CHECK_Mute_Sound:
         case IDC_CHECK_No_Sound:
           regen_accord = true; // для чекбоксов выше этой строки надо перенажимать аккорд, а ниже - не надо
-        case IDC_CHECK_Dont_Save_Empty_Voices:
         case IDC_CHECK_Edit_Sequence:
         case IDC_CHECK_Save_With_Manipuls:
         case IDC_CHECK_Sort_Mode:
-        case IDC_CHECK_Loop_Chain:
+        case IDC_CHECK_Loop_Sequence:
         case IDC_CHECK_Dont_Change_GM_Instr:
         case IDC_CHECK_Converter_Mode:
         case IDC_CHECK_Converter_Auto:
@@ -1355,11 +1394,11 @@ void MusicDialogBoxCtrl::NotesSetText()
   if ( checks[Zero_Ground_Notes].checked_state() )
   {
     // нужен показ нот с 0-й минимальной нотой вместо оригинального
-    pair<int,int> index_note = DichoticAccord::accord_notes_min( gen_acc );
+    pair<int,int> index_note = gen_acc.accord_notes_min();
     if ( index_note.first >= 0 ) add = -index_note.second;
   }
   // в индикаторах к нотам добавляем add = -(номер минимальной ноты аккорда)
-  DichoticAccord::NotesGetPos(gen_acc, notes1, num1, notes2, num2, notes3, num3, add);
+  gen_acc.NotesGetPos(notes1, num1, notes2, num2, notes3, num3, add);
 
   // стираем s, выводим список относит-х номеров нот голосов с левой позицией панорамы
   s.clear();
@@ -1379,7 +1418,7 @@ void MusicDialogBoxCtrl::NotesSetText()
   // определяем и выводим суммарный диссонанс аккорда с учётом панорамы и конфликтов
 
   // определяем конфликты определения диссонанса, аккорд не меняем!
-  bool conflict_diss = DichoticAccord::test_conflicts(gen_acc, false);
+  bool conflict_diss = gen_acc.test_conflicts(false);
 
   int diss = gen_acc.dissonance();
 
@@ -1389,7 +1428,7 @@ void MusicDialogBoxCtrl::NotesSetText()
   textctrls[Total_Diss].add_text( s );
 
   // выводим число уникальных нот в аккорде, игнорируя панораму
-  int unum = DichoticAccord::unique_notes_num(gen_acc);
+  int unum = gen_acc.unique_notes_num();
   s.clear();
   s << unum;
   textctrls[Uniq_Notes].add_text( s );
@@ -1401,18 +1440,18 @@ bool MusicDialogBoxCtrl::LoadAccords(int format, const wchar_t *file)
 // если есть строка file, то формат 0 грузим молча из этого файла!
 {
   // уничтожаем старый массив аккордов, сбрасываем параметры и загреиваем регулятор позиции аккорда и кнопки
-  accords_in_chain = 0;
+  accords_in_sequence = 0;
   sliders[Accord_Number].setpos(1);
   sliders[Accord_Number].reset_minmax(1,1);
   sliders[Accord_Number].enable(0);
 
-  sliders[Chain_Speed].setpos(10);
-  sliders[Chain_Speed].enable(0);
+  sliders[Sequence_Speed].setpos(10);
+  sliders[Sequence_Speed].enable(0);
 
-  checks[Loop_Chain].enable(0);
+  checks[Loop_Sequence].enable(0);
   checks[Dont_Change_GM_Instr].enable(0);
 
-  buttons[Save_Accords_Chain].enable(0);
+  buttons[Save_Accords_Sequence].enable(0);
   buttons[Play_Stop].enable(0);
   buttons[Rewind].enable(0);
 
@@ -1421,16 +1460,16 @@ bool MusicDialogBoxCtrl::LoadAccords(int format, const wchar_t *file)
   MusicFile mfile( hwnd() );
   bool res;
 
-  if (format == 0) res = mfile.Open(cheader, accords_chain, num_accords, file);
+  if (format == 0) res = mfile.Open(cheader, accords_sequence, num_accords, file);
   else //    == 1 .PAS формат
   {
     // в качестве дихотического сдвига берём значение регулятора относит-й ноты последнего видимого голоса
     int dtrans = dvoices[dialog_voices-1].get_note();
-    res = mfile.OpenPAS(dtrans, cheader, accords_chain, num_accords);
+    res = mfile.OpenPAS(dtrans, cheader, accords_sequence, num_accords);
   }
   if (!res) return false;
 
-  SetupAccords(num_accords); // подготовка контролов для новой секвенции в accords_chain и cheader
+  SetupAccords(num_accords); // подготовка контролов для новой секвенции в accords_sequence и cheader
 
   return true;
 }
@@ -1438,21 +1477,23 @@ bool MusicDialogBoxCtrl::LoadAccords(int format, const wchar_t *file)
 void MusicDialogBoxCtrl::SetupAccords(int num_accords)
 {
   // устанавливаем параметры и отгреиваем регулятор позиции аккорда и кнопки
-  accords_in_chain = num_accords;
-  sliders[Accord_Number].reset_minmax(1, accords_in_chain);
+  accords_in_sequence = num_accords;
+  sliders[Accord_Number].reset_minmax(1, accords_in_sequence);
   sliders[Accord_Number].enable(1);
 
-  sliders[Chain_Speed].enable(1);
-  checks[Loop_Chain].enable(1);
+  sliders[Sequence_Speed].enable(1);
+  checks[Loop_Sequence].enable(1);
   checks[Dont_Change_GM_Instr].enable(1);
 
-  buttons[Save_Accords_Chain].enable(1);
+  buttons[Save_Accords_Sequence].enable(1);
   buttons[Play_Stop].enable(1);
   buttons[Rewind].enable(1);
+  buttons[Press_Sequence].enable(1);
+  buttons[Sort_Sequence].enable(1);
 
   // копируем общие параметры секвенции из хедера куда надо
   sliders[Transposition].setpos( cheader.transposition );
-  sliders[Chain_Speed].setpos( sliders[Chain_Speed].get_pos_value(cheader.chain_speed) );
+  sliders[Sequence_Speed].setpos( sliders[Sequence_Speed].get_pos_value(cheader.sequence_speed) );
   checks[Dont_Change_GM_Instr].set_checked_state( cheader.dont_change_gm_instrument != 0 );
 
   // однократно устанавливаем инструмент если он не будет извлекаться из каждого аккорда
@@ -1460,6 +1501,66 @@ void MusicDialogBoxCtrl::SetupAccords(int num_accords)
 
   // готовим проигрывание первого аккорда секвенции
   RewindAccords();
+}
+
+void MusicDialogBoxCtrl::ConverterModeMain(bool Seq)
+// управление конвертацией, при Seq = true конвертация всей секвенции
+{
+  // только при операциях в боксе 0
+  if (act_dialog_index != 0) return;
+  // только если установлен чекбокс Converter_Mode
+  if ( dbox[0].get_check(Converter_Mode).unchecked_state() ) return;
+
+  if ( dbox[0].get_check(Converter_Auto).unchecked_state() )
+  {
+    // отлючён чекбокс Converter_Auto
+    DichoticAccord acc1h;
+    // делаем 2H конвертацию:
+    if ( dbox[0].checks[Edit_Sequence].checked_state() ) // если выбран чекбокс Edit_Sequence
+    {
+      // создаем текущий аккорд из контролов
+      cheader = SequenceHeaderFromControls();
+      acc1h = dbox[0].GetAccord();
+      // удаление унисонов согласно манипулятору With_Unisons происходит в ConverterModeExecute()
+    }
+    else
+    {
+      // берём текущий аккорд секвенции (он будет паузой если нет секвенции)
+      // cheader будет из секвенции (или он будет чистым --//--)
+      acc1h = accords_sequence[accord_act_index];
+    }
+    // 1H аккорд секвенции обрабатывается в боксе 1, формируя множество 2H вариантов
+    if ( !ConverterModeExecute(acc1h) ) goto error;
+  }
+  else // включён чекбокс Converter_Auto
+  {
+    // защита от преобразования целой секвенции там где имеет смысл преобразование только одного аккорда
+    if (!Seq) return;
+
+    // для каждого аккорда секвенции бокса 0 делается массив вариантов в боксе 1, берётся лучший 2H вариант
+    // (самый первый - с меньшим диссонансом), и все эти лучшие аккорды суммируются в секвенцию в боксе 2
+    dbox[2].Enable(0); // отключаем бокс 2 на период конвертации
+    for (int i = 0; i < accords_in_sequence; ++i)
+    {
+      DichoticAccord &acc1h = accords_sequence[i];
+      if ( !ConverterModeExecute(acc1h) ) goto error;
+      dbox[2].accords_sequence[i] = dbox[1].accords_sequence[0];
+    }
+    dbox[2].Enable(1);
+
+    dbox[2].cheader = cheader; // копируем хедер секвенции this-бокса 0 в бокс 2
+    // подготовка контролов для аккордов в accords_sequence и cheader бокса 2
+    dbox[2].SetupAccords(accords_in_sequence);
+
+    // копируем комментарий аккорда из бокса 0 в бокс 2
+    wchar_t str[1024];
+    dbox[0].edits[Accords_Sequence_Comment].get_text(str, 1024);
+    dbox[2].edits[Accords_Sequence_Comment].set_text(str);
+  }
+  return;
+
+error:
+  Mbox("Accord's voices number greater than", MAX_CONVERTER_VOICES);
 }
 
 bool MusicDialogBoxCtrl::ConverterModeExecute(DichoticAccord acc1h)
@@ -1494,17 +1595,17 @@ bool MusicDialogBoxCtrl::ConverterModeExecute(DichoticAccord acc1h)
     for (int i = 0; i < vars_num; ++i)
     {
       DichoticAccord &ai = acc2h[i];
-      if (ai.voices_number == 0) continue; // аккорд уже стёрт - берём следующий аккорд i
+      if ( ai.is_pause() ) continue; // аккорд уже стёрт - берём следующий аккорд i
     	int diss = ai.spare1;
     	for (int j = i+1; j < vars_num; ++j)
     	{
         DichoticAccord &aj = acc2h[j];
-        if (aj.voices_number == 0) continue; // аккорд уже стёрт - берём следующий аккорд j
+        if ( aj.is_pause() ) continue; // аккорд уже стёрт - берём следующий аккорд j
     		if (diss != aj.spare1) break; // другой диссонанс - берём следующий аккорд i
     		// else диссонансы совпадают, проверяем зеркальность
     		if ( DichoticAccord::mirror_accords(ai, aj) )
         {
-    		  aj.voices_number = 0; // делаем из аккорда паузу
+    		  aj.make_pause(); // делаем из аккорда паузу
           need_compress = true;
         }
     	}
@@ -1534,15 +1635,15 @@ bool MusicDialogBoxCtrl::ConverterModeExecute(DichoticAccord acc1h)
     for (int i = 0; i < vars_num; ++i)
     {
       DichoticAccord &ai = acc2h[i];
-      if (ai.voices_number == 0) continue; // аккорд уже стёрт - берём следующий аккорд i
+      if ( ai.is_pause() ) continue; // аккорд уже стёрт - берём следующий аккорд i
     	for (int j = i+1; j < vars_num; ++j)
     	{
         DichoticAccord &aj = acc2h[j];
-        if (aj.voices_number == 0) continue; // аккорд уже стёрт - берём следующий аккорд j
+        if ( aj.is_pause() ) continue; // аккорд уже стёрт - берём следующий аккорд j
         if ( ai.identic_voices(aj) )
         {
           // полное совпадение всех голосов аккордов ai и aj
-    		  aj.voices_number = 0; // делаем из аккорда паузу
+    		  aj.make_pause(); // делаем из аккорда паузу
           need_compress = true;
         }
     	}
@@ -1554,9 +1655,9 @@ bool MusicDialogBoxCtrl::ConverterModeExecute(DichoticAccord acc1h)
     {
       for (int i = 0; i < vars_num; ++i)
       {
-  		  if ( DichoticAccord::test_conflicts( acc2h[i] ) )
+  		  if ( acc2h[i].test_conflicts(false) )
         {
-  		    acc2h[i].voices_number = 0; // "стираем" аккорд - делаем из него паузу
+  		    acc2h[i].make_pause(); // "стираем" аккорд - делаем из него паузу
           need_compress = true;
         }
       }
@@ -1567,11 +1668,11 @@ bool MusicDialogBoxCtrl::ConverterModeExecute(DichoticAccord acc1h)
   {
     // удаляем все аккорды-паузы ("стёртые" аккорды) из массива acc2h - пере копированием
     vector<DichoticAccord> a2;
-    for (int i = 0; i < vars_num; ++i) if (acc2h[i].voices_number != 0) a2.push_back( acc2h[i] );
+    for (int i = 0; i < vars_num; ++i) if ( !acc2h[i].is_pause() ) a2.push_back( acc2h[i] );
     acc2h = a2;
   }
 
-  Ar <DichoticAccord> &Acc2h = dbox[1].accords_chain; // массив вариантов - 2H аккордов в боксе 1
+  Ar <DichoticAccord> &Acc2h = dbox[1].accords_sequence; // массив вариантов - 2H аккордов в боксе 1
 
   // копируем массив acc2h в Acc2h
   int accords_num = min( Acc2h.elements(), (int)acc2h.size() );
@@ -1580,74 +1681,135 @@ bool MusicDialogBoxCtrl::ConverterModeExecute(DichoticAccord acc1h)
   if (accords_num == 0)
   {
     accords_num = 1;
-    Acc2h[0].voices_number = 0;
+    Acc2h[0].make_pause();
   }
 
   dbox[1].cheader = cheader; // копируем хедер секвенции this-бокса 0 в бокс 1
-  // подготовка контролов для аккордов в accords_chain и cheader бокса 1
+  // подготовка контролов для аккордов в accords_sequence и cheader бокса 1
   dbox[1].SetupAccords(accords_num);
 
   dbox[1].RegenAccord(); // если аккорд звучал - перенажимаем аккорд
   return true;
 }
 
-void MusicDialogBoxCtrl::ConverterModeMain(bool Seq)
-// управление конвертацией, при Seq = true конвертация всей секвенции
+bool MusicDialogBoxCtrl::MakeVoicesCombinations(bool make)
+// если аргумент = false: выводим текст числа сочетаний голосов на кнопке Make_Voices_Combinations
+// если аргумент = true : дополнительно делаем секвенцию сочетаний голосов аккорда из их регуляторов
+// возвращает false если секвенция не создана
 {
-  // только при операциях в боксе 0
-  if (act_dialog_index != 0) return;
-  // только если установлен чекбокс Converter_Mode
-  if ( dbox[0].get_check(Converter_Mode).unchecked_state() ) return;
+  // читаем спин, определяем новое число сочетаний голосов
+  int K = dbox[0].spins[Voices_Combinations].getpos();
+  // определяем количество нажатых голосов аккорда
+  DichoticAccord acc = GetAccord(); // считываем аккорд (до манипуляторов)
+  acc.remove_pauses(); // удаляем все голоса-паузы, сжимая аккорд
+  // сортируем голоса аккорда в порядке возрастания номеров нот (больше голос - выше нота)
+  acc.sort_notes();
 
-  if ( dbox[0].get_check(Converter_Auto).unchecked_state() )
+  int N = acc.voices_number; // число включённых голосов без пауз
+  uint64 comb = C_n_k(N, K);
+  // выводим текст на кнопке Make_Voices_Combinations
+  wstring2 str;
+  str << L"Make Seq of max  " << comb << L"  Accords with " << K << L" Voices of " << N;
+  dbox[0].buttons[Make_Voices_Combinations].text( str.c_str() );
+
+  if (!make) return false;
+  // else надо делать секвенцию
+  if ( comb == 0 || comb > MAX_ACCORDS ) return false;
+
+  // готовим все сочетания голосов аккорда
+  vector<DichoticAccord> accarr; // массив для записи сочетаний
+  DichoticAccord::WriteCombinationVoices(N, K, acc, accarr);
+  // после этой функции часть голосов аккорда превращается в паузы
+
+  // убираем все голоса-паузы внутри аккорда
+  // транспонируем голоса каждого аккорда т.о. чтобы они начинались с base_note вверх,
+  // т.к. исходный аккорд, порождающий частичные аккорды-сочетания был отсортирован - имел высоты нот
+  // пропорциональные номерам голосов - то и все аккорды-сочетания будут также отсортированны!
+  int num_acc = (int)accarr.size();
+  int base_note = 0; // номер 0 тут логичнее всего...
+  for (int i = 0; i < num_acc; ++i)
   {
-    // отлючён чекбокс Converter_Auto
-    DichoticAccord acc1h;
-    // делаем 2H конвертацию:
-    if ( dbox[0].checks[Edit_Sequence].checked_state() ) // если выбран чекбокс Edit_Sequence
-    {
-      // создаем текущий аккорд из контролов
-      cheader = ChainHeaderFromControls();
-      acc1h = dbox[0].GetAccord();
-      // удаление унисонов согласно манипулятору With_Unisons происходит в ConverterModeExecute()
-    }
-    else
-    {
-      // берём текущий аккорд секвенции (он будет паузой если нет секвенции)
-      // cheader будет из секвенции (или он будет чистым --//--)
-      acc1h = accords_chain[accord_act_index];
-    }
-    // 1H аккорд секвенции обрабатывается в боксе 1, формируя множество 2H вариантов
-    if ( !ConverterModeExecute(acc1h) ) goto error;
+    DichoticAccord &acci = accarr[i];
+    acci.remove_pauses();
+    acci.transpose_accord(base_note);
   }
-  else // включён чекбокс Converter_Auto
+  // при этом часть аккордов может совпасть - тогда убираем их из массива сочетаний
+
+  // превращаем все лишние копии в аккорды-паузы
+  for (int i = 0; i < num_acc; ++i)
   {
-    // защита от преобразования целой секвенции там где имеет смысл преобразование только одного аккорда
-    if (!Seq) return;
-
-    // для каждого аккорда секвенции бокса 0 делается массив вариантов в боксе 1, берётся лучший 2H вариант
-    // (самый первый - с меньшим диссонансом), и все эти лучшие аккорды суммируются в секвенцию в боксе 2
-    dbox[2].Enable(0); // отключаем бокс 2 на период конвертации
-    for (int i = 0; i < accords_in_chain; ++i)
+    DichoticAccord &acci = accarr[i];
+    if ( acci.is_pause() ) continue;
+    for (int j = i+1; j < num_acc; ++j)
     {
-      DichoticAccord &acc1h = accords_chain[i];
-      if ( !ConverterModeExecute(acc1h) ) goto error;
-      dbox[2].accords_chain[i] = dbox[1].accords_chain[0];
+      DichoticAccord &accj = accarr[j];
+      if ( DichoticAccord::identic_accords(accj, acci) ) accj.make_pause();
     }
-    dbox[2].Enable(1);
-
-    dbox[2].cheader = cheader; // копируем хедер секвенции this-бокса 0 в бокс 2
-    // подготовка контролов для аккордов в accords_chain и cheader бокса 2
-    dbox[2].SetupAccords(accords_in_chain);
-
-    // копируем комментарий аккорда из бокса 0 в бокс 2
-    wchar_t str[1024];
-    dbox[0].edits[Accords_Chain_Comment].get_text(str, 1024);
-    dbox[2].edits[Accords_Chain_Comment].set_text(str);
   }
-  return;
 
-error:
-  Mbox("Accord's voices number greater than", MAX_CONVERTER_VOICES);
+  // копируем аккорды из массива accarr в accords_sequence кроме аккордов-пауз
+  int num_acc2 = accords_sequence.elements(), j = 0;
+  for (int i = 0; i < num_acc; ++i)
+  {
+    DichoticAccord &acci = accarr[i];
+    if ( !acci.is_pause() )
+    {
+      accords_sequence[j] = acci;
+      if (++j >= num_acc2) break;
+    }
+  }
+  int num_accords = j;
+
+  // создаем SequenceHeader секвенции и апдейтим её контролы
+  cheader = SequenceHeaderFromControls();
+  SetupAccords(num_accords);
+  return true;
+}
+
+void MusicDialogBoxCtrl::SortSequenceDiss()
+// сортировка аккордов секвенции в порядке возрастания полных диссонансов аккорда
+{
+  if (accords_in_sequence < 2) return;
+
+  int n;
+  // запоминаем полный диссонанс каждого аккорда в spare1
+  for (n = 0; n < accords_in_sequence; ++n)
+  {
+    int diss = accords_sequence[n].dissonance();
+    // у одноголосных аккордов, у аккордов с унисонами, у 2-х голосных с голосами по краям панорамы и т.д.
+    // диссонансы такие же как у аккордов-пауз и равны 0
+    // корректируем spare1 так, чтобы аккорды-паузы оказались в самом начале секвенции
+    // важны скобки после "diss +", т.к. без них всё что левее вопроса считается одним выражением!!
+    accords_sequence[n].spare1 = diss + (accords_sequence[n].voices_number>0? 1:0);
+  }
+
+  // сортируем секвенцию в порядке возрастания полных диссонансов аккорда
+  qsort( accords_sequence.memory(), accords_in_sequence, sizeof(DichoticAccord), DichoticAccord::CmpAcc2 );
+
+  // удаляем аккорды-паузы из секвенции
+  for (n = 0; n < accords_in_sequence; ++n)
+    if ( !accords_sequence[n].is_pause() ) break;
+  int index = n; // индекс первого аккорда-"не паузы"
+
+  if (index > 0)
+  {
+    // сдвигаем аккорды вниз по секвенции
+    for (n = index; n < accords_in_sequence; ++n)
+      accords_sequence[n-index] = accords_sequence[n];
+  }
+  int num_accords = accords_in_sequence - index;
+
+  // апдейтим контролы секвенции и перематываем её на первый аккорд
+  SetupAccords(num_accords);
+}
+
+void MusicDialogBoxCtrl::PressSequenceAccords()
+// сжатие секвенции путём удаления голосов-пауз из аккордов
+{
+  for (int n = 0; n < accords_in_sequence; ++n)
+    accords_sequence[n].remove_pauses();
+
+  // отображаем новый текущий аккорд
+  SetupAccord(accord_act_index);
 }
 

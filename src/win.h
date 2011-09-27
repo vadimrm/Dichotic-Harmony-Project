@@ -298,16 +298,16 @@ struct CheckCtrl // чекбокс контрол диалог бокса, в т
 
   void set_checked_state(bool checked) { setstate( checked? BST_CHECKED:BST_UNCHECKED ); }
   void enable(bool enable) { EnableDialogItem(hdlg, id, enable); }
-  void text(const wchar_t *str) { SendDialogItemMessage(hdlg, id, WM_SETTEXT, 0, LPARAM(str)); }
+  void text(const wchar_t *str) { SendDialogItemMessage(hdlg, id, WM_SETTEXT, 0, LPARAM(str)); }  // выводим str
   void inverse_state() { set_checked_state( !checked_state() ); } // 0/1 = BST_UNCHECKED/BST_CHECKED
 };
 
 
-struct ButtonCtrl // Button контрол диалог бокса, в.ч. триггерные би-кнопки (2 состояния)
+struct ButtonCtrl // Button контрол диалог бокса, в т.ч. т.н. "би-кнопки" (2 функциональных состояния)
 {
   int id; // идентификатор контрола
-  const wchar_t *name0; // неизменный текст контрола, для би-кнопок - текст в состоянии 0
-  const wchar_t *name1; // текст би-кнопок в состоянии 1
+  const wchar_t *name0; // неизменный текст контрола, для "би-кнопок" - текст в функциональном состоянии 0
+  const wchar_t *name1; // текст "би-кнопок" в функциональном состоянии 1 (см. напр. би-кнопку Play_Stop)
   int func_state; // функциональное состояние 0/1
   bool enable_state; // 0 загреенная кнопка
   HWND hdlg;
@@ -320,6 +320,7 @@ struct ButtonCtrl // Button контрол диалог бокса, в.ч. тр�
     button_text();
   }
 
+  // выводим str
   void text(const wchar_t *str) { SendDialogItemMessage(hdlg, id, WM_SETTEXT, 0, LPARAM(str)); }
   void button_text() { func_state==0? text(name0):text(name1); }
   void button_text(int new_func_state)
@@ -352,6 +353,8 @@ struct EditCtrl // Edit контрол диалог бокса
     enable();
   }
 
+  // выводим str
+  void text(const wchar_t *str) { set_text(str); } // синоним для общности
   void set_text(const wchar_t *str) { SendDialogItemMessage(hdlg, id, WM_SETTEXT, 0, LPARAM(str)); }
   void get_text(wchar_t *str, int maxlen) const
   {
@@ -371,6 +374,50 @@ struct EditCtrl // Edit контрол диалог бокса
   {
     enable_state = new_enable_state;
     enable();
+  }
+};
+
+struct SpinEditCtrl // Spin контрол, прикрученный к Edit контролу диалог бокса (только числа)
+{
+  int id; // идентификатор spin контрола
+  bool alignleft; // 1 = спин слева редактора, 0 = справа
+  int pmin, pmax, actpos; // макс, мин и текущее значение спина (от -32768 до 32767, спин - 16-бит функция)
+  int id_edit; // идентификатор edit контрола
+  bool readonly_edit; // 1 ридонли редактор
+  EditCtrl edit;
+  HWND hdlg;
+
+  void init(HINSTANCE hInstance, HWND dialog_hwnd)
+  {
+    hdlg = dialog_hwnd;
+    edit.id = id_edit;
+    edit.readonly_state = readonly_edit;
+    edit.enable_state = 1;
+    edit.init(hdlg);
+    // создаем спин, прикрученный к окну редактирования
+    HWND hEdit = GetDlgItem(dialog_hwnd, id_edit);
+    // UDS_NOTHOUSANDS - не отделяем "тысячи" дополнительным пробелом!
+    DWORD dwStyle = WS_CHILD | WS_BORDER | WS_VISIBLE | UDS_NOTHOUSANDS | UDS_SETBUDDYINT | UDS_ARROWKEYS;
+    dwStyle |= alignleft? UDS_ALIGNLEFT : UDS_ALIGNRIGHT;
+    // относительные координаты левоверхнего угла и размеры спина внутри окна edit
+    int x = 0, y = 0, cx = 40, cy = 40; // похоже эти параметры игнорируются - спин делается под размер окна!
+    CreateUpDownControl(dwStyle, x, y, cx, cy, dialog_hwnd, id, hInstance, hEdit, pmax, pmin, actpos);
+  }
+
+  int return_pos() const { return actpos; }
+
+  void setpos(int pos) { SendDialogItemMessage(hdlg, id, UDM_SETPOS, 0, pos); }
+
+  int getpos()
+  {
+    actpos = SendDialogItemMessage(hdlg, id, UDM_GETPOS, 0, 0);
+    // выход за пределы диапазона возможен при помощи ручного редактирования цифр!
+    if ( !in_range(pmin, actpos, pmax) )
+    {
+      testminxmax(pmin, actpos, pmax);
+      setpos(actpos);
+    }
+    return actpos;
   }
 };
 
@@ -408,9 +455,11 @@ class DialogBoxCtrl
 protected:
   int dialog_index; // индекс экземпляра диалогбокса: 0, 1, 2 ... пока не используется!
   HWND hdlg; // хендл окна бокса
+  HINSTANCE hInst;
 
   // массивы контролов бокса ("медленные", так безопаснее)
   Ar <EditCtrl,SLOW_ARRAY> edits;
+  Ar <SpinEditCtrl,SLOW_ARRAY> spins;
   Ar <TextCtrl,SLOW_ARRAY> textctrls;
   Ar <CheckCtrl,SLOW_ARRAY> checks;
   Ar <ButtonCtrl,SLOW_ARRAY> buttons;
@@ -424,24 +473,27 @@ public:
 
   bool Create(HINSTANCE hInstance, WORD wInteger, HWND hWndParent, DLGPROC lpDialogFunc)
   {
+    hInst = hInstance;
     id = wInteger;
     hdlg = CreateDialog(hInstance, MAKEINTRESOURCE(wInteger), hWndParent, lpDialogFunc);
     return hdlg != 0;
   }
 
   // любые манипуляции с контролами делаются через эти функции
-  EditCtrl&   rw_edit(int index)   { return edits[index]; }
-  TextCtrl&   rw_static(int index) { return textctrls[index]; }
-  CheckCtrl&  rw_check(int index)  { return checks[index]; }
-  ButtonCtrl& rw_button(int index) { return buttons[index]; }
+  EditCtrl&     rw_edit(int index)   { return edits[index]; }
+  SpinEditCtrl& rw_spin(int index)   { return spins[index]; }
+  TextCtrl&     rw_static(int index) { return textctrls[index]; }
+  CheckCtrl&    rw_check(int index)  { return checks[index]; }
+  ButtonCtrl&   rw_button(int index) { return buttons[index]; }
   ComboBoxCtrl&   rw_combo(int index)  { return combos[index]; }
   TextSliderCtrl& rw_slider(int index) { return sliders[index]; }
 
   // константные манипуляции с контролами делаются через эти функции
-  const EditCtrl   get_edit(int index)   const { return edits[index]; }
-  const TextCtrl   get_static(int index) const { return textctrls[index]; }
-  const CheckCtrl  get_check(int index)  const { return checks[index]; }
-  const ButtonCtrl get_button(int index) const { return buttons[index]; }
+  const EditCtrl     get_edit(int index)   const { return edits[index]; }
+  const SpinEditCtrl get_spin(int index)   const { return spins[index]; }
+  const TextCtrl     get_static(int index) const { return textctrls[index]; }
+  const CheckCtrl    get_check(int index)  const { return checks[index]; }
+  const ButtonCtrl   get_button(int index) const { return buttons[index]; }
   const ComboBoxCtrl   get_combo(int index)  const { return combos[index]; }
   const TextSliderCtrl get_slider(int index) const { return sliders[index]; }
 
@@ -506,6 +558,15 @@ public:
       {
         edits[i] = *(EditCtrl*)&ctrl_array[i];
         edits[i].init( hwnd() );
+      }
+    }
+    else if ( typeid(T) == typeid(SpinEditCtrl) )
+    {
+      spins.renew(ctrl_numbers);
+      for (int i = 0; i < ctrl_numbers; ++i)
+      {
+        spins[i] = *(SpinEditCtrl*)&ctrl_array[i];
+        spins[i].init( hInst, hwnd() );
       }
     }
     else if ( typeid(T) == typeid(ComboBoxCtrl) )

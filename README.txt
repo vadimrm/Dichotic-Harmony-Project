@@ -74,4 +74,4 @@ Copyright (c) 2010 Vadim Madgazin. All Rights reserved Worldwide.
 на сайте автора   http://vmgames.com/ru/music/
 в Git репозитории http://github.com/vadimrm/Dichotic-Harmony-Project
 
-Дата последнего обновления проекта: 5 августа 2011 г.
+Дата последнего обновления проекта: 27 сентября 2011 г.

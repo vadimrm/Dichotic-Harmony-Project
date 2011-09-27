@@ -1,12 +1,17 @@
-﻿#include "stdafx.h"
+﻿
+#include "stdafx.h"
+#include "stdafx2.h"
 
 // #pragma warning(push)
 // #pragma warning(disable:4996) // 'func' was declared deprecated
 
+const wchar_t *UNI_SPACE2 = L"  ";
 const wchar_t *VOICE_PAUSE = L"X"; // маркер паузы голоса в файле аккорда
+const wchar_t *UNI_SPACE_VOICE_PAUSE = L" X";
 const wchar_t *ACCORD_NUMBER = L";"; // префикс порядкового номера аккорда в файле аккорда
+const wchar_t *UNI_SPACE_ACCORD_NUMBER = L" ;";
 
-void MakeAccordsStrings(ChainHeader ch, const DichoticAccord *acc_chain, int num_accords, wstring2 &s0, wstring2 &s)
+void MakeAccordsStrings(SequenceHeader ch, const DichoticAccord *acc_sequence, int num_accords, wstring2 &s0, wstring2 &s)
 // упаковка аккордов в две строки: s0 - заголовок, s - тело файла аккорда
 {
   // в самом начале файла - маркер Unicode текста, затем 1-я строка - номер версии формата файла
@@ -16,12 +21,12 @@ void MakeAccordsStrings(ChainHeader ch, const DichoticAccord *acc_chain, int num
 
   // затем 2-я строка - комментарий к секвенции аккордов
   wchar_t comment[512]; // комментарий из эдитбокса в файл
-  actbox().get_edit(Accords_Chain_Comment).get_text(comment, 512);
+  actbox().get_edit(Accords_Sequence_Comment).get_text(comment, 512);
   s0 << comment << UNI_CRLF;
 
   // затем 3-я строка - названия и значения общих параметров секвенции аккордов
   s0 << L"Transposition " << ch.transposition
-     << L"  Chain_Speed " << ch.chain_speed
+     << L"  Sequence_Speed " << ch.sequence_speed
      << L"  Dont_Change_GM_Instr " << ch.dont_change_gm_instrument
      << L"  Instrument_Number " << ch.instrument_number << UNI_CRLF;
 
@@ -30,43 +35,59 @@ void MakeAccordsStrings(ChainHeader ch, const DichoticAccord *acc_chain, int num
      << UNI_TAB << L"Volume" << UNI_TAB << L"note pan" << UNI_CRLF;
 
   // затем начиная с 5-й строки идут числовые параметры каждого аккорда секвенции
-  for (int n = 0; n < num_accords; ++n)
+  for (int n = 0; n < num_accords; ++n) // этот цикл медленный при num_accords > 1000 @
   {
-    DichoticAccord acc = acc_chain[n];
+    DichoticAccord acc = acc_sequence[n];
 
     // преобразуем аккорд согласно реал-тайм манипуляторам
-    if ( actbox().get_check(Save_With_Manipuls).checked_state() ) acc = DichoticAccord::accord_manipulator( acc );
+    if ( actbox().get_check(Save_With_Manipuls).checked_state() ) acc.accord_manipulator();
 
-    s << acc.instrument << UNI_TAB << acc.duration << UNI_TAB << acc.temp << UNI_TAB << acc.voices_number;
+    s << acc.instrument;
+    s += UNI_TAB; // += вместо << для ускорения...
+    s << acc.duration;
+    s += UNI_TAB;
+    s << acc.temp;
+    s += UNI_TAB;
+    s << acc.voices_number;
+
     // если это не пауза аккорда - выводим все ноты/панорамы аккорда
-    if (acc.voices_number > 0)
+    if ( !acc.is_pause() )
     {
-      s << UNI_TAB << acc.volume << UNI_TAB;
+      s += UNI_TAB;
+      s << acc.volume;
+      s += UNI_TAB;
+
       for (int i=0; i < acc.voices_number; ++i)
       {
         if ( acc.dn[i].pause ) // если это пауза голоса
         {
-          s << UNI_SPACE << VOICE_PAUSE;
+          s += UNI_SPACE_VOICE_PAUSE;
           continue;
         }
         // else это нота
-        s << UNI_SPACE << UNI_SPACE;
+        s += UNI_SPACE2;
 
         int n = acc.dn[i].note;
         int p = acc.dn[i].pan;
-        if (n < 10) s << UNI_SPACE;
-        s << n << UNI_SPACE;
-        if (p >= 0) s << L"+";
+        if (n < 10) s += UNI_SPACE;
+        s << n;
+        s += UNI_SPACE;
+        if (p >= 0) s += L"+";
         s << p;
       }
     }
 
     // после конца аккорда добавляем пробел, маркер и номер аккорда, номера начинаются с 1!
-    s << UNI_SPACE << ACCORD_NUMBER << (n+1);
+    s += UNI_SPACE_ACCORD_NUMBER;
+    s << (n+1);
     // если есть комментарий - добавляем его через пробел!
-    if ( acc.ok_comment() ) s << UNI_SPACE << acc.comment;
+    if ( acc.ok_comment() )
+    {
+      s += UNI_SPACE;
+      s << acc.comment;
+    }
 
-    s << UNI_CRLF;
+    s += UNI_CRLF;
   }
 }
 
@@ -82,12 +103,12 @@ const wchar_t *MusicFile::format_version_header = L"Dichotic_Accords_File_Format
 
 // при mode = 1 (Append) добавляем аккорд к сушествующему файлу, а если файла нет - пишем его с нуля!
 // при     0, 2, 3(Save) записываем 1 или секвенцию аккордов в файл, если файл есть - стираем и перезаписываем его!
-bool MusicFile::SaveAs(ChainHeader ch, const DichoticAccord *acc_chain, int num_accords, int mode, const wchar_t *DirName)
+bool MusicFile::SaveAs(SequenceHeader ch, const DichoticAccord *acc_sequence, int num_accords, int mode, const wchar_t *DirName)
 {
   // файл на диске будет текстовым в кодировке Unicode
   wstring2 s0, s;
   // упаковка аккордов в две строки: s0 - заголовок, s - тело файла аккорда
-  MakeAccordsStrings(ch, acc_chain, num_accords, s0, s);
+  MakeAccordsStrings(ch, acc_sequence, num_accords, s0, s);
   s0 += s; // теперь строка s0 содержит всё для нового файла, а s только для добавления в существующий файл
 
   // буфер текста и размер буфера в байтах (сначала предполагаем что файл будет новый)
@@ -95,7 +116,7 @@ bool MusicFile::SaveAs(ChainHeader ch, const DichoticAccord *acc_chain, int num_
   int file_bytes = sizeof(wchar_t)*s0.size();
 
   // записываем данные в файл, по умолчанию в текущий каталог
-  const wchar_t *title[4] = { L"Save Accord", L"Append Accord", L"Save Accords Chain", L"Save Accords Chain" };
+  const wchar_t *title[4] = { L"Save Accord", L"Append Accord", L"Save Accords Sequence", L"Save Accords Sequence" };
   const wchar_t *DlgTitle = title[mode]; // титул диалога
   const wchar_t *DefExt = L"daccords"; // расширение файла если юзер не ввел его, без "точки"!
   wchar_t File[FILE_STRLEN]; // буфер для полного имени файла, >= 256 байт!
@@ -141,7 +162,7 @@ bool MusicFile::SaveAs(ChainHeader ch, const DichoticAccord *acc_chain, int num_
   return false;
 }
 
-bool MusicFile::OpenPAS(int dtrans, ChainHeader &ch, DichoticAccord *acc_chain, int &max_accords, const wchar_t *file, const wchar_t *DirName)
+bool MusicFile::OpenPAS(int dtrans, SequenceHeader &ch, DichoticAccord *acc_sequence, int &max_accords, const wchar_t *file, const wchar_t *DirName)
 // загрузка секвенции из .PAS файлов от редактора Muse, переделанных в Unicode .txt
 // с добавлением в конец 1-й строки файла midi номера инструмента "Instr N", причём
 // dtrans - дихотическая транспозиция: если 0, то все аккорды звучат по центру (моно), а любое другое значение
@@ -219,7 +240,7 @@ bool MusicFile::OpenPAS(int dtrans, ChainHeader &ch, DichoticAccord *acc_chain, 
   max_accords = i-ADDS+1;
   if (max_accords <= 0) return false; // нет ни одного аккорда
 
-  // Accords_Chain_Comment.set_text( pstr[0] ); // для отладки показываем строку общих параметров
+  // Accords_Sequence_Comment.set_text( pstr[0] ); // для отладки показываем строку общих параметров
 
   // 1-я строка: вводим общие параметры секвенции аккордов
   wstring2 s = pstr[0];
@@ -228,7 +249,7 @@ bool MusicFile::OpenPAS(int dtrans, ChainHeader &ch, DichoticAccord *acc_chain, 
   s >> str >> temp60 >> str >> trans >> str >> instr;
 
   ch.transposition = trans;
-  ch.chain_speed = 1;
+  ch.sequence_speed = 1;
   ch.dont_change_gm_instrument = 1;
   ch.instrument_number = instr;
 
@@ -250,10 +271,11 @@ bool MusicFile::OpenPAS(int dtrans, ChainHeader &ch, DichoticAccord *acc_chain, 
       acc.dn[n].pan = (dtrans==0)? 0:-1;
       if (!pause) all_pause = false;
     }
-    acc.voices_number = all_pause? 0:5;
+    acc.voices_number = 5;
+    if (all_pause) acc.make_pause();
 
     // при дихотическом сдвиге добавляем в правый канал исходные ноты со сдвигом
-    if (dtrans != 0 && acc.voices_number != 0)
+    if (dtrans != 0 && !acc.is_pause() )
     {
       acc.voices_number = 10;
       for (int n=5; n < 10; ++n)
@@ -277,13 +299,13 @@ bool MusicFile::OpenPAS(int dtrans, ChainHeader &ch, DichoticAccord *acc_chain, 
     // очищаем комментарий аккорда
     acc.comment[0] = UNI_NULL;
 
-    acc_chain[i] = acc;
+    acc_sequence[i] = acc;
   }
 
   return true;
 }
 
-bool MusicFile::Open(ChainHeader &ch, DichoticAccord *acc_chain, int &max_accords, const wchar_t *file, const wchar_t *DirName)
+bool MusicFile::Open(SequenceHeader &ch, DichoticAccord *acc_sequence, int &max_accords, const wchar_t *file, const wchar_t *DirName)
 {
   const wchar_t *DlgTitle = L"Accords Open";
   const wchar_t *DefExt = L"daccords";
@@ -374,11 +396,11 @@ bool MusicFile::Open(ChainHeader &ch, DichoticAccord *acc_chain, int &max_accord
     return false;
   }
 
-  actbox().rw_edit(Accords_Chain_Comment).set_text( pstr[1] ); // 2-я строка: комментарий секвенции из файла в эдитбокс
+  actbox().rw_edit(Accords_Sequence_Comment).set_text( pstr[1] ); // 2-я строка: комментарий секвенции из файла в эдитбокс
 
   // 3-я строка: вводим общие параметры секвенции аккордов
   s = pstr[2];
-  s >> str >> ch.transposition >> str >> ch.chain_speed >>
+  s >> str >> ch.transposition >> str >> ch.sequence_speed >>
        str >> ch.dont_change_gm_instrument >> str >> ch.instrument_number;
 
   // 4-я строка: аббревиатуры числовых параметров аккорда (не используем)
@@ -394,7 +416,7 @@ bool MusicFile::Open(ChainHeader &ch, DichoticAccord *acc_chain, int &max_accord
     mintestmax(0, acc.voices_number, DichoticAccord::MAX_ACC_VOICES);
 
     // если это не пауза - вводим все ноты/панорамы аккорда
-    if (acc.voices_number > 0)
+    if ( !acc.is_pause() )
     {
       s >> acc.volume;
       for (int i=0; i < acc.voices_number; ++i)
@@ -425,7 +447,7 @@ bool MusicFile::Open(ChainHeader &ch, DichoticAccord *acc_chain, int &max_accord
     wcsncpy(acc.comment, comm.c_str(), DichoticAccord::COMMLEN-1);
     acc.comment[DichoticAccord::COMMLEN-1] = UNI_NULL;
 
-    acc_chain[i] = acc;
+    acc_sequence[i] = acc;
   }
 
   return true;

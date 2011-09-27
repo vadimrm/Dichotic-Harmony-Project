@@ -1,5 +1,6 @@
 ﻿
 #include "stdafx.h"
+#include "stdafx2.h"
 
 // имена стандартных midi инструментов
 const wchar_t * MidiInterface::PatchNames[GM_INSTRUMENTS_NUMBER] =

@@ -1,5 +1,6 @@
 ﻿
 #include "stdafx.h"
+#include "stdafx2.h"
 
 const wchar_t *UNI_CRLF = L"\r\n"; // в конце каждой строки - пара символов UNI_CR,UNI_LF
 const wchar_t *UNI_NULL_STR = L""; // широкая пустая строка
